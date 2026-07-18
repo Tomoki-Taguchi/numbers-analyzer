@@ -1,0 +1,59 @@
+name: Update NUMBERS Data
+
+on:
+  schedule:
+    # ナンバーズは平日抽選（月〜金 夜）。翌未明(UTC)に更新。JST 9:00頃 = UTC 0:00。
+    - cron: '0 0 * * 2,3,4,5,6'   # 火〜土 UTC 0:00 = 平日抽選の翌朝JST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    strategy:
+      # N3 と N4 を別ランナーで並列実行（seedにgame名を含むので独立・決定的）
+      matrix:
+        game: [numbers3, numbers4]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install PyTorch CPU
+        run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+      - name: Install other dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Fetch latest data
+        env:
+          GAME: ${{ matrix.game }}
+        run: python scripts/fetch_numbers.py --game "$GAME"
+
+      - name: Run analysis
+        env:
+          GAME: ${{ matrix.game }}
+        run: python scripts/analyze_numbers.py --game "$GAME"
+
+      - name: Commit and push
+        env:
+          GAME: ${{ matrix.game }}
+          REF: ${{ github.ref_name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # 並列ジョブ間の push 競合を避けるため rebase-pull してから push
+          git add docs/data/
+          if git diff --staged --quiet; then
+            echo "No changes for $GAME"
+            exit 0
+          fi
+          git commit -m "Update $GAME data $(date -u +%Y-%m-%d)"
+          for i in 1 2 3 4 5; do
+            git pull --rebase --autostash origin "$REF" && git push && break || sleep $((RANDOM % 10 + 3))
+          done

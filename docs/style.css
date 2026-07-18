@@ -1,0 +1,136 @@
+/* ============================================================
+   NUMBERS ANALYZER - Soft Warm Light Theme (loto6-analyzer 準拠)
+   ============================================================ */
+
+:root {
+  --bg-primary: #f5f3ee;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --gold: #c49a3f;
+  --gold-dim: #a07f2c;
+  --text: #3a3843;
+  --text-muted: #837e73;
+  --border: #e8e3d9;
+  --hot: #e08a7a;
+  --cold: #57b0a5;
+  --n3: #c49a3f;
+  --n4: #7a86c4;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  background: var(--bg-primary);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* Header */
+header { text-align: center; padding: 1.6rem 1rem 0.8rem; background: linear-gradient(180deg, var(--bg-secondary), var(--bg-primary)); }
+header h1 { font-size: 1.8rem; color: var(--gold); letter-spacing: 0.08em; }
+.subtitle { color: var(--text-muted); margin-top: 0.3rem; font-size: 0.85rem; }
+.stats-bar { display: flex; justify-content: center; gap: 1.5rem; margin-top: 0.9rem; font-size: 0.82rem; color: var(--text-muted); flex-wrap: wrap; }
+.stats-bar span { color: var(--gold); font-weight: bold; }
+
+/* Game switcher */
+.game-switch { display: flex; justify-content: center; gap: 0.5rem; margin: 1rem auto 0.4rem; }
+.game-btn {
+  background: var(--bg-secondary); border: 1.5px solid var(--border); color: var(--text-muted);
+  padding: 0.5rem 1.6rem; border-radius: 999px; cursor: pointer; font-size: 0.95rem; font-weight: 600;
+  transition: all 0.15s;
+}
+.game-btn:hover { border-color: var(--gold); }
+.game-btn.active { color: #fff; background: var(--gold); border-color: var(--gold); }
+.game-btn.n4.active { background: var(--n4); border-color: var(--n4); }
+
+/* Period slider */
+.period-section { max-width: 960px; margin: 0.4rem auto 0; padding: 0.6rem 1rem; }
+.period-slider-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 0.8rem 1.2rem; }
+.period-label { font-size: 0.82rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem; }
+.period-slider { width: 100%; accent-color: var(--gold); }
+.period-display { text-align: center; font-size: 0.9rem; color: var(--gold); font-weight: 600; margin-top: 0.3rem; }
+
+/* Tabs */
+.tabs { display: flex; overflow-x: auto; background: var(--bg-secondary); border-bottom: 1px solid var(--border); padding: 0 0.5rem; -webkit-overflow-scrolling: touch; position: sticky; top: 0; z-index: 10; }
+.tab { background: none; border: none; color: var(--text-muted); padding: 0.75rem 1rem; cursor: pointer; font-size: 0.86rem; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.2s; }
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* Main */
+main { max-width: 960px; margin: 0 auto; padding: 1.3rem 1rem; }
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fade 0.25s; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Cards */
+.card { background: var(--bg-card); border-radius: 12px; padding: 1.3rem; margin-bottom: 1.3rem; border: 1px solid var(--border); }
+.card h3 { color: var(--gold); font-size: 1.05rem; margin-bottom: 0.9rem; }
+.card h4 { color: var(--text); font-size: 0.95rem; margin: 0.6rem 0; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.3rem; }
+@media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+/* Ball / digit badges */
+.digit { display: inline-flex; align-items: center; justify-content: center; width: 2.2rem; height: 2.2rem; border-radius: 50%; background: var(--gold); color: #fff; font-weight: 700; font-size: 1.1rem; margin: 0 0.12rem; }
+.digit.n4 { background: var(--n4); }
+.digit.big { width: 2.8rem; height: 2.8rem; font-size: 1.4rem; }
+.number-str { display: flex; justify-content: center; gap: 0.2rem; margin: 0.5rem 0; }
+
+/* Prediction cards */
+.pred-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem; margin-bottom: 1rem; }
+.pred-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+.pred-mode { font-weight: 700; color: var(--gold); font-size: 0.98rem; }
+.pred-conf { font-size: 0.78rem; color: var(--text-muted); }
+.pred-metrics { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.5rem; text-align: center; }
+.pos-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.6rem; margin-top: 0.8rem; }
+.pos-cell { border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem; text-align: center; }
+.pos-cell .plabel { font-size: 0.72rem; color: var(--text-muted); }
+.pos-cell .cands { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.3rem; }
+.reason-list { list-style: none; margin-top: 0.7rem; font-size: 0.78rem; color: var(--text-muted); }
+.reason-list li { padding: 0.2rem 0; border-top: 1px dashed var(--border); }
+
+/* Digit grid (frequency / grid table) */
+.digit-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; margin-top: 0.6rem; }
+.digit-cell { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 6px; font-size: 0.72rem; background: var(--bg-primary); border: 1px solid var(--border); }
+.digit-cell .dnum { font-weight: 700; font-size: 0.85rem; }
+.digit-cell .dcnt { font-size: 0.66rem; color: var(--text-muted); }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+th, td { padding: 0.45rem 0.5rem; text-align: center; border-bottom: 1px solid var(--border); }
+th { color: var(--text-muted); font-weight: 600; font-size: 0.76rem; }
+.tbl-wrap { overflow-x: auto; }
+
+/* Appearance grid (出目表) */
+.grid-wrap { overflow-x: auto; }
+.appear-grid { border-collapse: collapse; font-size: 0.72rem; margin: 0 auto; }
+.appear-grid th, .appear-grid td { border: 1px solid var(--border); padding: 0.28rem 0.34rem; min-width: 1.7rem; }
+.appear-grid .mark { color: var(--gold); font-weight: 700; }
+.hotcold-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.7rem; font-size: 0.8rem; }
+.hotcold-row .chip { padding: 0.2rem 0.5rem; border-radius: 6px; }
+.chip.hot { background: rgba(224,138,122,0.18); color: var(--hot); }
+.chip.cold { background: rgba(87,176,165,0.18); color: var(--cold); }
+
+/* Bars */
+.bar-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.25rem 0; font-size: 0.78rem; }
+.bar-row .lbl { width: 2.5rem; text-align: right; color: var(--text-muted); }
+.bar-track { flex: 1; background: var(--bg-primary); border-radius: 4px; height: 0.9rem; overflow: hidden; }
+.bar-fill { height: 100%; background: var(--gold); }
+.bar-row .val { width: 3rem; font-size: 0.72rem; color: var(--text-muted); }
+
+.metric-big { text-align: center; font-size: 1.4rem; color: var(--gold); font-weight: 700; margin-bottom: 1rem; }
+.chart-container { position: relative; height: 320px; margin-bottom: 1.3rem; }
+.chart-small { height: 240px; }
+
+/* Glossary */
+.glossary-box { background: rgba(196,154,63,0.06); border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem; margin-top: 1rem; }
+.glossary-box h4 { color: var(--gold); margin-bottom: 0.6rem; font-size: 0.9rem; }
+.glossary { font-size: 0.8rem; }
+.glossary dt { font-weight: 700; color: var(--text); margin-top: 0.5rem; }
+.glossary dd { color: var(--text-muted); margin-left: 0; line-height: 1.6; }
+
+.disclaimer { color: var(--text-muted); font-size: 0.75rem; text-align: center; }
+footer { padding: 1.5rem 1rem 2.5rem; max-width: 960px; margin: 0 auto; }
+.loading { text-align: center; color: var(--text-muted); padding: 3rem 1rem; }
+.note { font-size: 0.76rem; color: var(--text-muted); line-height: 1.6; }
+.pill { display: inline-block; font-size: 0.72rem; padding: 0.1rem 0.5rem; border-radius: 999px; background: var(--bg-primary); border: 1px solid var(--border); color: var(--text-muted); }

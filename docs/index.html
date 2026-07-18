@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NUMBERS ANALYZER｜ナンバーズ3・4 統計分析×AI予想</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"
+          integrity="sha384-e6nUZLBkQ86NJ6TVVKAeSaK8jWa3NhkYWZFomE39AvDbQWeie9PlQqM3pmYW5d1g"
+          crossorigin="anonymous"></script>
+</head>
+<body>
+  <header>
+    <h1>🔢 NUMBERS ANALYZER</h1>
+    <p class="subtitle">ナンバーズ3・ナンバーズ4 ｜ 統計分析 × AI予想</p>
+    <div class="game-switch">
+      <button class="game-btn active" data-game="numbers3">ナンバーズ3</button>
+      <button class="game-btn n4" data-game="numbers4">ナンバーズ4</button>
+    </div>
+    <div class="stats-bar" id="statsBar"></div>
+  </header>
+
+  <div class="period-section">
+    <div class="period-slider-wrap">
+      <label class="period-label">📅 分析期間</label>
+      <input type="range" id="periodSlider" class="period-slider" min="0" max="0" value="0">
+      <div id="periodDisplay" class="period-display"></div>
+    </div>
+  </div>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-tab="prediction">🤖 AI予想</button>
+    <button class="tab" data-tab="frequency">📊 各位頻度</button>
+    <button class="tab" data-tab="grid">📋 出目表</button>
+    <button class="tab" data-tab="pull">🔗 引っ張り</button>
+    <button class="tab" data-tab="sum">➕ 合計値</button>
+    <button class="tab" data-tab="shape">📐 形</button>
+    <button class="tab" data-tab="recent">🎱 直近結果</button>
+    <button class="tab" data-tab="montecarlo">🎲 モンテカルロ</button>
+    <button class="tab" data-tab="stats">📁 成績</button>
+  </nav>
+
+  <main id="main">
+    <section id="tab-prediction" class="tab-content active">
+      <div id="predictionResult"></div>
+      <div class="glossary-box">
+        <h4>📖 用語説明</h4>
+        <dl class="glossary">
+          <dt>各位（くらい）</dt><dd>ナンバーズは桁ごとに0〜9の数字が独立に抽選されます。予想も各位ごとに有力数字を選びます。</dd>
+          <dt>引っ張り</dt><dd>前回と同じ位置に同じ数字が続けて出る傾向。直近5回を加重して評価します。</dd>
+          <dt>周期</dt><dd>各位の各数字が「だいたいN回おきに出る」パターン。到来タイミングに近いほど加点。</dd>
+          <dt>RF / LSTM</dt><dd>各位ごとに0〜9を予測する機械学習モデル（RandomForest／時系列LSTM）。ナンバーズは0-9がほぼ一様なので予測は弱シグナルです。</dd>
+          <dt>合計値ターゲット</dt><dd>過去の合計値分布から目標帯を選び、各位の有力数字を合計が帯に収まるよう組み立てるモード。</dd>
+          <dt>信頼度</dt><dd>各数字のスコアを重みに1万回抽選したモンテカルロで、その数字（またはストレート/ボックス）が選ばれた割合。</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section id="tab-frequency" class="tab-content">
+      <div id="frequencyResult"></div>
+      <div class="glossary-box">
+        <h4>📖 用語説明</h4>
+        <dl class="glossary">
+          <dt>各位頻度</dt><dd>各位で0〜9がそれぞれ何回出たか。0-9一様なら各10%が期待値。赤いほど多い（ホット）、青いほど少ない（コールド）。</dd>
+          <dt>未出（干ばつ）</dt><dd>その数字がその位で最後に出てから何回経ったか。平均間隔より大きいほど「そろそろ」。</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section id="tab-grid" class="tab-content">
+      <div id="gridResult"></div>
+      <div class="glossary-box">
+        <h4>📖 用語説明</h4>
+        <dl class="glossary">
+          <dt>出目表</dt><dd>各位（行）×0〜9（列）で、選択期間に各数字が何回出たかを一覧化。色が濃いほど出現が多い。各位のホット・コールド数字も表示。</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section id="tab-pull" class="tab-content">
+      <div id="pullResult"></div>
+      <div class="glossary-box">
+        <h4>📖 用語説明</h4>
+        <dl class="glossary">
+          <dt>引っ張り</dt><dd>前回と同じ位置で同じ数字が出た回数。各位の反復率の期待値は約10%（1/10）。</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section id="tab-sum" class="tab-content">
+      <div id="sumResult"></div>
+      <div class="glossary-box">
+        <h4>📖 用語説明</h4>
+        <dl class="glossary">
+          <dt>合計値</dt><dd>各位の数字の合計。ナンバーズ3は0〜27（平均13.5）、ナンバーズ4は0〜36（平均18）付近が出やすい。</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section id="tab-shape" class="tab-content">
+      <div id="shapeResult"></div>
+      <div class="glossary-box">
+        <h4>📖 用語説明</h4>
+        <dl class="glossary">
+          <dt>形パターン</dt><dd>奇偶比・大小比・ゾロ目（全桁同じ）・連番・ダブル（重複あり）の割合。</dd>
+          <dt>ボックス組合せ</dt><dd>順序を無視した数字の組合せの出現頻度TOP。ボックス買いの参考に。</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section id="tab-recent" class="tab-content">
+      <div class="card"><div id="recentResult" class="tbl-wrap"></div></div>
+    </section>
+
+    <section id="tab-montecarlo" class="tab-content">
+      <div class="card">
+        <h3>🎲 モンテカルロ・シミュレーションとは</h3>
+        <p class="note">各数字の統計スコアを重みとして、各位を独立に1万回抽選し、各数字が選ばれた割合を「信頼度」として算出します。ナンバーズは0-9がほぼ一様なため、値は概ね各10%前後に収束します（＝当てにくいゲームである、という事実がそのまま出ます）。</p>
+      </div>
+      <div id="mcResult"></div>
+    </section>
+
+    <section id="tab-stats" class="tab-content">
+      <div id="statsResult"></div>
+      <div class="glossary-box">
+        <h4>📖 用語説明</h4>
+        <dl class="glossary">
+          <dt>ストレート/ボックス/セット</dt><dd>ストレート=順序も一致、ボックス=数字の組が一致、セット=どちらか。理論確率はストレート=1/10³(N3)・1/10⁴(N4)。</dd>
+          <dt>バックテスト</dt><dd>直近150回を「その回の直前までのデータ」で予想し直した成績（統計モードのみ・先読み無し）。AIを含む実成績はアーカイブに時間とともに蓄積されます。</dd>
+        </dl>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p class="disclaimer">
+      ⚠️ 本ツールは過去の抽選データに基づく統計分析であり、将来の当選を予測・保証するものではありません。ナンバーズは各位0〜9がほぼ一様なほぼ記憶のないゲームです。娯楽としてお楽しみください。宝くじの購入は自己責任でお願いします。
+    </p>
+    <p class="disclaimer" style="margin-top:0.5rem" id="dataSource"></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
