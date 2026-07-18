@@ -6,36 +6,40 @@
 ## Phase 1: 雛形
 - [x] ディレクトリ作成・git init
 - [x] データ元HTML構造の実地確認（detailグループが最新まで／404で終端）
-- [ ] requirements.txt / .gitignore / README
+- [x] requirements.txt / .gitignore / README
 
 ## Phase 2: fetch_numbers.py
-- [ ] 楽天スクレイパ（detailグループ巡回・差分更新・欠番検出）
-- [ ] N3全件取得・検証（先頭ゼロ保持）
-- [ ] N4全件取得・検証
+- [x] 楽天スクレイパ（detailグループ巡回・差分更新・欠番検出）
+- [x] N3全件取得・検証（7029件・欠番0・先頭ゼロ保持）
+- [x] N4全件取得・検証（7029件・欠番0）
 
 ## Phase 3: analyze_numbers.py（統計）
-- [ ] frequency（各位＋全体）/ appearance_grid（出目表）
-- [ ] pull（位置別引っ張り）/ digit_sum / shape / cycle / position_pairs
-- [ ] JSON出力目視検証
+- [x] frequency（各位＋全体）/ appearance_grid（出目表）
+- [x] pull（位置別引っ張り）/ digit_sum / shape / cycle / position_pairs
+- [x] JSON出力検証（各位合計=総回数, N3 sum≈13.6/N4≈18.1）
 
 ## Phase 4: analyze_numbers.py（AI予想）
-- [ ] RF（各位10クラス）/ LSTM（各位one-hot）
-- [ ] monte_carlo / random_baseline / 予想モード / sum_target
-- [ ] 決定性（同入力bit一致）検証
+- [x] RF（各位10クラス）/ LSTM（各位one-hot）
+- [x] monte_carlo / random_baseline / 予想モード7種 / sum_target
+- [x] 決定性（同入力bit一致=BITMATCH_OK, 6桁丸めで浮動小数ノイズ吸収）
 
 ## Phase 5: フロントエンド
-- [ ] index.html（N3/N4切替＋期間スライダー＋タブ）
-- [ ] app.js / style.css
-- [ ] ローカル配信で全タブ描画確認
+- [x] index.html（N3/N4切替＋期間スライダー＋9タブ）
+- [x] app.js / style.css（Chart.js SRI付き）
+- [x] ローカル配信で全タブ描画確認（コンソールエラー0）
 
 ## Phase 6: アーカイブ/成績
-- [ ] build/verify/mode_stats（straight/box/mini/位置一致）
-- [ ] バックテスト集計確認
+- [x] build/verify/mode_stats（straight/box/mini/位置一致）
+- [x] 軽量バックテスト（統計モード直近150回・look-ahead無し）
 
 ## Phase 7: CI＋Pages
-- [ ] update.yml（matrix N3/N4）
-- [ ] GitHub public repo作成・push・Pages有効化
-- [ ] gh workflow runで初回フル生成・ライブ確認
+- [x] update.yml（matrix N3/N4・push競合対策rebase）
+- [x] GitHub public repo作成・push・Pages有効化（ライブ200・描画確認済）
+- [~] gh workflow run（CIパイプライン検証・実行中）
 
 ## レビュー
-（完了後に記入）
+- ライブ: https://tomoki-taguchi.github.io/numbers-analyzer/
+- リポジトリ: https://github.com/Tomoki-Taguchi/numbers-analyzer
+- 実装: fetch/analyze を6モジュールに分割（各<800行規約遵守）
+- 正直さ: ナンバーズはほぼ記憶なし→頻度/hot-coldは弱信号。バックテストのstraight率≈ランダム基準(0.1%/0.01%)。免責・弱シグナルをUIに明記
+- 未確認: 初回スケジュール実行までアーカイブ実成績は空（設計通り時間とともに蓄積）
