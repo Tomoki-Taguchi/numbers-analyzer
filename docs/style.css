@@ -126,6 +126,8 @@ th { color: var(--text-muted); font-weight: 600; font-size: 0.76rem; }
 .appear-grid th, .appear-grid td { border: 1px solid var(--border); padding: 0.28rem 0.34rem; min-width: 1.7rem; }
 .appear-grid .mark { color: var(--gold); font-weight: 700; }
 .hotcold-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.7rem; font-size: 0.8rem; }
+.appear-grid tr.wd-next th { color: var(--gold); font-weight: 800; }
+.appear-grid tr.wd-next td { outline: 1px solid rgba(196,154,63,0.35); }
 .hotcold-row .chip { padding: 0.2rem 0.5rem; border-radius: 6px; }
 .chip.hot { background: rgba(224,138,122,0.18); color: var(--hot); }
 .chip.cold { background: rgba(87,176,165,0.18); color: var(--cold); }

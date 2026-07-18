@@ -8,8 +8,11 @@
 
 import statistics
 from collections import Counter, defaultdict
+from datetime import date as _date, timedelta
 
 from numbers_common import DIGIT_SUM_RECENT_BLEND
+
+WEEKDAY_LABELS = ["月", "火", "水", "木", "金", "土", "日"]
 
 
 def _digits_of(draws):
@@ -259,6 +262,63 @@ def analyze_position_pairs(draws, D):
     top_box = [{"combo": list(combo), "count": cnt, "percentage": round(cnt / n * 100, 3)}
                for combo, cnt in box.most_common(20)] if n else []
     return {"position_pairs": pairs, "top_box_combos": top_box}
+
+
+def analyze_weekday(draws, D):
+    """曜日別の傾向（全期間）。各曜日の件数・平均合計・各位/全体の数字別出現率・hot/cold。
+
+    ナンバーズは月〜金抽選。公平なくじなので本来曜日で偏りは出ない（各数字≈10%）。
+    差はほぼ揺らぎだが「面白さ」として提示する。next_weekday は次回抽選の曜日。
+    """
+    groups = defaultdict(list)
+    for dr in draws:
+        try:
+            wd = _date.fromisoformat(dr["date"]).weekday()  # 0=月
+        except (ValueError, KeyError):
+            continue
+        groups[wd].append(dr)
+
+    weekdays = {}
+    for wd in range(5):  # 月〜金
+        g = groups.get(wd, [])
+        n = len(g)
+        if n == 0:
+            continue
+        overall = Counter()
+        per_pos = {p: Counter() for p in range(D)}
+        sums = []
+        for dr in g:
+            overall.update(dr["digits"])
+            sums.append(sum(dr["digits"]))
+            for p in range(D):
+                per_pos[p][dr["digits"][p]] += 1
+        slots = n * D
+        ranked = sorted(range(10), key=lambda d: overall.get(d, 0), reverse=True)
+        weekdays[str(wd)] = {
+            "label": WEEKDAY_LABELS[wd],
+            "count": n,
+            "avg_sum": round(sum(sums) / n, 2),
+            "overall": {str(d): round(overall.get(d, 0) / slots * 100, 2) for d in range(10)},
+            "per_position": {str(p): {str(d): round(per_pos[p].get(d, 0) / n * 100, 2) for d in range(10)} for p in range(D)},
+            "hot": ranked[:3],
+            "cold": ranked[-3:][::-1],
+        }
+
+    # 次回抽選の曜日（最終抽選日の翌営業日、土日はスキップ）
+    next_wd = None
+    next_label = None
+    if draws:
+        try:
+            d = _date.fromisoformat(draws[-1]["date"])
+            for _ in range(7):
+                d = d + timedelta(days=1)
+                if d.weekday() < 5:
+                    next_wd, next_label = d.weekday(), WEEKDAY_LABELS[d.weekday()]
+                    break
+        except (ValueError, KeyError):
+            next_wd = None
+    return {"weekdays": weekdays, "next_weekday": next_wd, "next_label": next_label,
+            "total_draws": len(draws)}
 
 
 def build_appearance_grid(draws, D):

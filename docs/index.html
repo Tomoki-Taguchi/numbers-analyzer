@@ -36,6 +36,7 @@
     <button class="tab" data-tab="sum">➕ 合計値</button>
     <button class="tab" data-tab="shape">📐 形</button>
     <button class="tab" data-tab="recent">🎱 直近結果</button>
+    <button class="tab" data-tab="weekday">📅 曜日</button>
     <button class="tab" data-tab="montecarlo">🎲 モンテカルロ</button>
     <button class="tab" data-tab="stats">📁 成績</button>
   </nav>
@@ -110,6 +111,17 @@
 
     <section id="tab-recent" class="tab-content">
       <div class="card"><div id="recentResult" class="tbl-wrap"></div></div>
+    </section>
+
+    <section id="tab-weekday" class="tab-content">
+      <div id="weekdayResult"></div>
+      <div class="glossary-box">
+        <h4>📖 用語説明</h4>
+        <dl class="glossary">
+          <dt>曜日別傾向</dt><dd>ナンバーズは月〜金に抽選。曜日ごとに各数字・各位の出やすさ、平均合計を全期間で集計します。次回抽選の曜日を強調表示。</dd>
+          <dt>注意</dt><dd>公平なくじなので本来は曜日で偏りません（各数字≈10%）。差はほぼ揺らぎです。あくまで「読み物」としてお楽しみください。</dd>
+        </dl>
+      </div>
     </section>
 
     <section id="tab-montecarlo" class="tab-content">

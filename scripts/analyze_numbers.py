@@ -109,6 +109,9 @@ def run(game: str):
     print("--- 全期間＋各直近N回の分析・予想 ---")
     periods, period_labels = compute_periods(draws, D, game_cfg, date_str)
 
+    # 曜日別傾向（全期間で1回だけ計算）
+    weekday = stats.analyze_weekday(draws, D)
+
     # アーカイブ
     archive_path = game_cfg["archive_path"]
     archive = arc.load_archive(archive_path)
@@ -146,6 +149,7 @@ def run(game: str):
         "position_labels": game_cfg["positions"],
         "period_labels": period_labels,
         "periods": periods,
+        "weekday": weekday,
         "archive": archive,
         "mode_stats": mode_stats,
         "backtest": backtest,

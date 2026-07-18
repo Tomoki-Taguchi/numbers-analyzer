@@ -111,7 +111,7 @@ function renderCurrent() {
   const map = {
     prediction: renderPrediction, frequency: renderFrequency, grid: renderGrid,
     pull: renderPull, sum: renderSum, shape: renderShape, recent: renderRecent,
-    montecarlo: renderMonteCarlo, stats: renderStats,
+    weekday: renderWeekday, montecarlo: renderMonteCarlo, stats: renderStats,
   };
   (map[state.activeTab] || (() => {}))();
 }
@@ -309,6 +309,49 @@ function renderRecent() {
     <td>${numberBadges(r.digits)}</td><td>${r.sum}</td><td>${r.odd_even}</td><td>${r.shape}</td></tr>`).join("");
   el("recentResult").innerHTML = `<h3>直近の抽選結果（${el("periodDisplay").textContent}）</h3>
     <table><tr><th>回</th><th>日付</th><th>当選番号</th><th>合計</th><th>奇偶</th><th>形</th></tr>${rows}</table>`;
+}
+
+// ---- 曜日 ----
+function renderWeekday() {
+  const w = state.data.weekday;
+  if (!w || !w.weekdays) { el("weekdayResult").innerHTML = '<div class="card"><p class="note">曜日データがありません。</p></div>'; return; }
+  const wds = w.weekdays;
+  const order = ["0", "1", "2", "3", "4"]; // 月〜金
+  const next = w.next_weekday != null ? String(w.next_weekday) : null;
+
+  const vals = [];
+  order.forEach(k => { if (wds[k]) for (let d = 0; d < 10; d++) vals.push(wds[k].overall[String(d)]); });
+  const lo = Math.min(...vals), hi = Math.max(...vals);
+
+  const head = "<tr><th>曜日＼数字</th>" + Array.from({ length: 10 }, (_, d) => `<th>${d}</th>`).join("") + "<th>件数</th><th>平均合計</th><th>ホット</th></tr>";
+  let rows = "";
+  order.forEach(k => {
+    const wd = wds[k]; if (!wd) return;
+    const isNext = k === next;
+    let cells = "";
+    for (let d = 0; d < 10; d++) { const v = wd.overall[String(d)]; cells += `<td style="background:${heatColor(v, lo, hi)}">${v}</td>`; }
+    rows += `<tr class="${isNext ? "wd-next" : ""}"><th>${wd.label}${isNext ? " ⭐" : ""}</th>${cells}<td>${wd.count}</td><td>${wd.avg_sum}</td><td class="mark">${wd.hot.join(",")}</td></tr>`;
+  });
+
+  let nextHtml = "";
+  if (next && wds[next]) {
+    const wd = wds[next];
+    const posHtml = positions().map((lab, p) => {
+      const pp = wd.per_position[String(p)];
+      const ranked = Object.entries(pp).sort((a, b) => b[1] - a[1]).slice(0, 3);
+      return `<div class="pos-cell"><div class="plabel">${lab}</div>${digitBadge(+ranked[0][0])}
+        <div class="cands">出やすい: ${ranked.map(([d, v]) => `${d}(${v}%)`).join(" ")}</div></div>`;
+    }).join("");
+    nextHtml = `<div class="card"><h3>⭐ 次回抽選【${wd.label}曜】に出やすい数字（全期間）</h3>
+      <p class="note">${wd.label}曜の全${wd.count}回で、各位のホット数字（差はほぼ揺らぎです）。</p>
+      <div class="pos-row">${posHtml}</div></div>`;
+  }
+
+  el("weekdayResult").innerHTML = `
+    ${nextHtml}
+    <div class="card"><h3>📅 曜日別 数字の出やすさ（全期間 ${w.total_draws}回）</h3>
+      <p class="note">${next && wds[next] ? `次回抽選は【${wds[next].label}曜】⭐ ｜ ` : ""}各曜日で0〜9の出現率(%)。赤いほど多く・青いほど少ない。本来は各10%（公平なくじ）。</p>
+      <div class="grid-wrap"><table class="appear-grid">${head}${rows}</table></div></div>`;
 }
 
 // ---- モンテカルロ ----
