@@ -128,13 +128,12 @@ function renderPrediction() {
     const cands = p.candidates || [{ digits: p.digits, number_str: p.number_str, sum: p.metrics.sum, shape: p.metrics.shape, pull_count: 0 }];
     const cardHtml = cands.map((c, i) => {
       const pull = c.pull_count > 0 ? `<span class="pull-tag" title="引っ張り${c.pull_count}箇所">⚡${c.pull_count}</span>` : "";
-      return `<div class="cand ${i === 0 ? "top" : ""}">
-        ${i === 0 ? '<span class="cand-rank">#1</span>' : `<span class="cand-rank">${i + 1}</span>`}
+      return `<div class="cand ${i === 0 ? "top" : ""}" onclick="showReasons('${mk}',${i})" id="cand-${mk}-${i}">
+        <span class="cand-rank">${i + 1}</span>
         <span class="cand-num">${c.number_str}</span>
         <span class="cand-meta">計${c.sum}・${c.shape}${pull}</span>
       </div>`;
     }).join("");
-    const reasons = p.per_position.map(e => `<li>▸ ${e.reason_text}</li>`).join("");
     const conf = [];
     if (mc.straight_pct != null && mc.straight_pct > 0) conf.push(`#1 ストレート ${mc.straight_pct}%`);
     if (mc.box_pct != null && mc.box_pct > 0) conf.push(`ボックス ${mc.box_pct}%`);
@@ -147,11 +146,34 @@ function renderPrediction() {
         <span class="pred-conf">${conf.join(" ／ ")}${tsum}</span>
       </div>
       <div class="cand-grid">${cardHtml}</div>
-      <details class="pred-detail"><summary>#1「${p.number_str}」の選出根拠</summary>
-        <ul class="reason-list">${reasons}</ul></details>
+      <div class="cand-reasons" id="reasons-${mk}"></div>
     </div>`;
   }
   el("predictionResult").innerHTML = html;
+  // 各モード #1 の根拠を初期表示
+  for (const mk of MODE_ORDER) { if (preds[mk]) showReasons(mk, 0); }
+}
+
+// 候補クリックで、その数字の各位の選出根拠を表示
+function showReasons(mk, idx) {
+  const pred = period().predictions[mk];
+  if (!pred) return;
+  const cand = (pred.candidates || [])[idx];
+  const table = pred.digit_reasons || [];
+  if (!cand) return;
+  const factorName = { freq: "頻度", recent: "直近", drought: "未出", pull: "引っ張り", cycle: "周期", rf: "RF", lstm: "LSTM" };
+  const rows = cand.digits.map((d, p) => {
+    const entry = (table[p] && table[p].digits[String(d)]) || {};
+    const tag = factorName[entry.top_factor] || "";
+    return `<li><span class="rz-pos">${(table[p] && table[p].label) || ""}</span>
+      <span class="rz-tag">${tag}</span> ${entry.text || ""}</li>`;
+  }).join("");
+  const pullNote = cand.pull_count > 0 ? ` ⚡引っ張り${cand.pull_count}箇所` : "";
+  el(`reasons-${mk}`).innerHTML = `<div class="reasons-head">「${cand.number_str}」の選出根拠${pullNote}</div>
+    <ul class="reason-list">${rows}</ul>`;
+  // 選択中カードをハイライト
+  const grid = el(`reasons-${mk}`).previousElementSibling;
+  if (grid) grid.querySelectorAll(".cand").forEach((c, i) => c.classList.toggle("selected", i === idx));
 }
 
 // ---- 各位頻度 ----

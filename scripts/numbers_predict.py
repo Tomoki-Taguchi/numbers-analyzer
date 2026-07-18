@@ -270,6 +270,23 @@ def _candidate_list(digits_list, D, last_digits):
     return [_candidate_entry(dg, D, last_digits) for dg in digits_list]
 
 
+def _digit_reasons(factors, weights, freq_data, cycle_data, rf_scores, lstm_scores, draws, D, positions):
+    """位置×数字(0-9)ごとの選出根拠テーブル。どの候補もこの表を引くだけで根拠を出せる。"""
+    table = []
+    for p in range(D):
+        per_d = {}
+        for d in range(10):
+            contrib = {f: weights.get(f, 0.0) * factors[p][f][d] for f in factors[p]}
+            tf = max(contrib, key=contrib.get) if contrib else "freq"
+            per_d[str(d)] = {
+                "top_factor": tf,
+                "text": _factor_phrase(tf, p, d, freq_data, cycle_data,
+                                       rf_scores, lstm_scores, draws, D, positions),
+            }
+        table.append({"position": p, "label": positions[p], "digits": per_d})
+    return table
+
+
 def _build_position_entries(digits, base, factors, weights, freq_data, cycle_data,
                             rf_scores, lstm_scores, draws, D, positions):
     entries = []
@@ -336,6 +353,8 @@ def generate_prediction(base_data, freq_data, cycle_data, rf_scores, lstm_scores
         "number_str": "".join(str(d) for d in digits),
         "candidates": candidates,
         "per_position": entries,
+        "digit_reasons": _digit_reasons(factors, weights, freq_data, cycle_data,
+                                        rf_scores, lstm_scores, draws, D, positions),
         "metrics": metrics,
         "monte_carlo": mc,
         "overall_confidence": overall,
@@ -400,6 +419,8 @@ def generate_sum_target_prediction(base_data, digit_sum_data, freq_data, cycle_d
         "number_str": "".join(str(d) for d in digits),
         "candidates": candidates,
         "per_position": entries,
+        "digit_reasons": _digit_reasons(factors, weights, freq_data, cycle_data,
+                                        rf_scores, lstm_scores, draws, D, positions),
         "metrics": metrics,
         "monte_carlo": mc,
         "target_band": {"label": target_band, "range": [lo, hi],

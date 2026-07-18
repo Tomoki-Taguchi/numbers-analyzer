@@ -100,8 +100,13 @@ main { max-width: 960px; margin: 0 auto; padding: 1.3rem 1rem; }
 .cand.top .cand-num { color: var(--gold-dim); }
 .cand-meta { display: block; font-size: 0.66rem; color: var(--text-muted); margin-top: 0.15rem; }
 .pull-tag { display: inline-block; margin-left: 0.25rem; color: var(--hot); font-weight: 700; }
-.pred-detail { margin-top: 0.3rem; }
-.pred-detail summary { font-size: 0.78rem; color: var(--gold-dim); cursor: pointer; }
+.cand { cursor: pointer; transition: border-color 0.12s, background 0.12s; }
+.cand:hover { border-color: var(--gold); }
+.cand.selected { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold) inset; }
+.cand-reasons { margin-top: 0.6rem; border-top: 1px solid var(--border); padding-top: 0.5rem; }
+.reasons-head { font-size: 0.82rem; font-weight: 700; color: var(--gold-dim); margin-bottom: 0.2rem; }
+.reason-list .rz-pos { display: inline-block; min-width: 3.2rem; color: var(--text); font-weight: 600; }
+.reason-list .rz-tag { display: inline-block; font-size: 0.68rem; padding: 0.02rem 0.35rem; border-radius: 999px; background: rgba(196,154,63,0.14); color: var(--gold-dim); margin-right: 0.3rem; }
 
 /* Digit grid (frequency / grid table) */
 .digit-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; margin-top: 0.6rem; }
