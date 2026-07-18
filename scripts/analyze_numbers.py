@@ -112,6 +112,26 @@ def run(game: str):
     # 曜日別傾向（全期間で1回だけ計算）
     weekday = stats.analyze_weekday(draws, D)
 
+    # 曜日専用予想: 次回抽選の曜日の抽選だけで予想を出し分ける
+    weekday_predictions = None
+    nw = weekday.get("next_weekday")
+    if nw is not None:
+        wsub = [dr for dr in draws if stats.weekday_of(dr["date"]) == nw]
+        if len(wsub) >= 50:
+            print(f"--- 曜日専用予想（{stats.WEEKDAY_LABELS[nw]}曜・{len(wsub)}回） ---")
+            wf = stats.analyze_frequency(wsub, D)
+            wc = stats.analyze_cycle(wsub, D)
+            wds = stats.analyze_digit_sum(wsub, D)
+            wrf = predict_rf(wsub, D)
+            wlstm = predict_lstm(wsub, D)
+            wbase = compute_factors(wf, wc, wrf, wlstm, wsub, D)
+            wpreds = run_predictions(wbase, wf, wc, wrf, wlstm, wds, wsub, D,
+                                     game_cfg, f"wd{nw}", date_str)
+            weekday_predictions = {
+                "weekday": nw, "label": stats.WEEKDAY_LABELS[nw], "count": len(wsub),
+                "predictions": wpreds,
+            }
+
     # アーカイブ
     archive_path = game_cfg["archive_path"]
     archive = arc.load_archive(archive_path)
@@ -150,6 +170,7 @@ def run(game: str):
         "period_labels": period_labels,
         "periods": periods,
         "weekday": weekday,
+        "weekday_predictions": weekday_predictions,
         "archive": archive,
         "mode_stats": mode_stats,
         "backtest": backtest,

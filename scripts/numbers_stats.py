@@ -264,20 +264,42 @@ def analyze_position_pairs(draws, D):
     return {"position_pairs": pairs, "top_box_combos": top_box}
 
 
+def weekday_of(date_str):
+    """日付文字列(YYYY-MM-DD)の曜日(0=月..6=日)。不正なら None。"""
+    try:
+        return _date.fromisoformat(date_str).weekday()
+    except (ValueError, KeyError, TypeError):
+        return None
+
+
 def analyze_weekday(draws, D):
-    """曜日別の傾向（全期間）。各曜日の件数・平均合計・各位/全体の数字別出現率・hot/cold。
+    """曜日別の傾向（全期間）。件数・平均合計・合計値分布・各位/全体の出現率・hot/cold・引っ張り率。
 
     ナンバーズは月〜金抽選。公平なくじなので本来曜日で偏りは出ない（各数字≈10%）。
     差はほぼ揺らぎだが「面白さ」として提示する。next_weekday は次回抽選の曜日。
     """
     groups = defaultdict(list)
     for dr in draws:
-        try:
-            wd = _date.fromisoformat(dr["date"]).weekday()  # 0=月
-        except (ValueError, KeyError):
-            continue
-        groups[wd].append(dr)
+        wd = weekday_of(dr["date"])
+        if wd is not None and wd < 5:
+            groups[wd].append(dr)
 
+    # 引っ張り率（連続抽選間で同位置反復。現在の抽選の曜日に集計）
+    pull_tot = {wd: 0 for wd in range(5)}
+    pull_pos = {wd: [0] * D for wd in range(5)}
+    pull_trans = {wd: 0 for wd in range(5)}
+    for i in range(1, len(draws)):
+        wd = weekday_of(draws[i]["date"])
+        if wd is None or wd >= 5:
+            continue
+        prev, cur = draws[i - 1]["digits"], draws[i]["digits"]
+        pulled = [p for p in range(D) if prev[p] == cur[p]]
+        pull_tot[wd] += len(pulled)
+        for p in pulled:
+            pull_pos[wd][p] += 1
+        pull_trans[wd] += 1
+
+    smax = D * 9
     weekdays = {}
     for wd in range(5):  # 月〜金
         g = groups.get(wd, [])
@@ -294,14 +316,20 @@ def analyze_weekday(draws, D):
                 per_pos[p][dr["digits"][p]] += 1
         slots = n * D
         ranked = sorted(range(10), key=lambda d: overall.get(d, 0), reverse=True)
+        sum_dist = Counter(sums)
+        trans = pull_trans[wd] or 1
         weekdays[str(wd)] = {
             "label": WEEKDAY_LABELS[wd],
             "count": n,
             "avg_sum": round(sum(sums) / n, 2),
+            "sum_std": round(statistics.pstdev(sums), 2) if n > 1 else 0.0,
+            "sum_distribution": {str(s): sum_dist.get(s, 0) for s in range(smax + 1)},
             "overall": {str(d): round(overall.get(d, 0) / slots * 100, 2) for d in range(10)},
             "per_position": {str(p): {str(d): round(per_pos[p].get(d, 0) / n * 100, 2) for d in range(10)} for p in range(D)},
             "hot": ranked[:3],
             "cold": ranked[-3:][::-1],
+            "pull_average": round(pull_tot[wd] / trans, 3),
+            "pull_per_position": {str(p): round(pull_pos[wd][p] / trans, 3) for p in range(D)},
         }
 
     # 次回抽選の曜日（最終抽選日の翌営業日、土日はスキップ）

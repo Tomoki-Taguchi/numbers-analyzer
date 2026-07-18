@@ -117,46 +117,53 @@ function renderCurrent() {
 }
 
 // ---- AI予想 ----
+// 予想カード（候補10点＋根拠パネル）を組み立てる。src は 'period' か 'wd'。
+function predCardHtml(src, mk, p) {
+  const mc = p.monte_carlo || {};
+  const cands = p.candidates || [{ number_str: p.number_str, sum: p.metrics.sum, shape: p.metrics.shape, pull_count: 0 }];
+  const cardHtml = cands.map((c, i) => {
+    const pull = c.pull_count > 0 ? `<span class="pull-tag" title="引っ張り${c.pull_count}箇所">⚡${c.pull_count}</span>` : "";
+    return `<div class="cand ${i === 0 ? "top" : ""}" onclick="showReasons('${src}','${mk}',${i})" id="cand-${src}-${mk}-${i}">
+      <span class="cand-rank">${i + 1}</span>
+      <span class="cand-num">${c.number_str}</span>
+      <span class="cand-meta">計${c.sum}・${c.shape}${pull}</span>
+    </div>`;
+  }).join("");
+  const conf = [];
+  if (mc.straight_pct != null && mc.straight_pct > 0) conf.push(`#1 ストレート ${mc.straight_pct}%`);
+  if (mc.box_pct != null && mc.box_pct > 0) conf.push(`ボックス ${mc.box_pct}%`);
+  if (mc.mini_pct != null && mc.mini_pct > 0) conf.push(`ミニ ${mc.mini_pct}%`);
+  const tsum = p.metrics.target_sum ? ` ｜ 目標合計帯 ${p.metrics.target_sum}` : "";
+  const weakNote = mk === "pull_heavy" ? '<span class="pill" style="color:var(--hot)">参考（記憶なしゲームでは当たりにくい）</span>' : "";
+  return `<div class="pred-card">
+    <div class="pred-head">
+      <span class="pred-mode">${p.mode_name} ${weakNote}</span>
+      <span class="pred-conf">${conf.join(" ／ ")}${tsum}</span>
+    </div>
+    <div class="cand-grid">${cardHtml}</div>
+    <div class="cand-reasons" id="reasons-${src}-${mk}"></div>
+  </div>`;
+}
+
+function _predBySource(src, mk) {
+  if (src === "wd") return state.data.weekday_predictions && state.data.weekday_predictions.predictions[mk];
+  return period().predictions[mk];
+}
+
 function renderPrediction() {
   const preds = period().predictions;
   let html = `<div class="card"><h3>🤖 第${state.data.latest_round + 1}回 予想（${el("periodDisplay").textContent}）</h3>
-    <p class="note">各モードが重視する指標で候補を10点ずつ提示します（#1＝最有力）。⚡は前回と同じ位置に同じ数字が出る「引っ張り」を含む候補。ナンバーズは各位0-9がほぼ一様なので引っ張りは平均約1/3の頻度で自然に現れます。</p></div>`;
+    <p class="note">各モードが重視する指標で候補を10点ずつ提示します（#1＝最有力）。候補をクリックすると選出根拠が出ます。⚡は前回と同じ位置に同じ数字が出る「引っ張り」を含む候補。ナンバーズは各位0-9がほぼ一様なので引っ張りは平均約1/3の頻度で自然に現れます。</p></div>`;
   for (const mk of MODE_ORDER) {
-    const p = preds[mk];
-    if (!p) continue;
-    const mc = p.monte_carlo || {};
-    const cands = p.candidates || [{ digits: p.digits, number_str: p.number_str, sum: p.metrics.sum, shape: p.metrics.shape, pull_count: 0 }];
-    const cardHtml = cands.map((c, i) => {
-      const pull = c.pull_count > 0 ? `<span class="pull-tag" title="引っ張り${c.pull_count}箇所">⚡${c.pull_count}</span>` : "";
-      return `<div class="cand ${i === 0 ? "top" : ""}" onclick="showReasons('${mk}',${i})" id="cand-${mk}-${i}">
-        <span class="cand-rank">${i + 1}</span>
-        <span class="cand-num">${c.number_str}</span>
-        <span class="cand-meta">計${c.sum}・${c.shape}${pull}</span>
-      </div>`;
-    }).join("");
-    const conf = [];
-    if (mc.straight_pct != null && mc.straight_pct > 0) conf.push(`#1 ストレート ${mc.straight_pct}%`);
-    if (mc.box_pct != null && mc.box_pct > 0) conf.push(`ボックス ${mc.box_pct}%`);
-    if (mc.mini_pct != null && mc.mini_pct > 0) conf.push(`ミニ ${mc.mini_pct}%`);
-    const tsum = p.metrics.target_sum ? ` ｜ 目標合計帯 ${p.metrics.target_sum}` : "";
-    const weakNote = mk === "pull_heavy" ? '<span class="pill" style="color:var(--hot)">参考（記憶なしゲームでは当たりにくい）</span>' : "";
-    html += `<div class="pred-card">
-      <div class="pred-head">
-        <span class="pred-mode">${p.mode_name} ${weakNote}</span>
-        <span class="pred-conf">${conf.join(" ／ ")}${tsum}</span>
-      </div>
-      <div class="cand-grid">${cardHtml}</div>
-      <div class="cand-reasons" id="reasons-${mk}"></div>
-    </div>`;
+    if (preds[mk]) html += predCardHtml("period", mk, preds[mk]);
   }
   el("predictionResult").innerHTML = html;
-  // 各モード #1 の根拠を初期表示
-  for (const mk of MODE_ORDER) { if (preds[mk]) showReasons(mk, 0); }
+  for (const mk of MODE_ORDER) { if (preds[mk]) showReasons("period", mk, 0); }
 }
 
-// 候補クリックで、その数字の各位の選出根拠を表示
-function showReasons(mk, idx) {
-  const pred = period().predictions[mk];
+// 候補クリックで、その数字の各位の選出根拠を表示（src: 'period' | 'wd'）
+function showReasons(src, mk, idx) {
+  const pred = _predBySource(src, mk);
   if (!pred) return;
   const cand = (pred.candidates || [])[idx];
   const table = pred.digit_reasons || [];
@@ -169,10 +176,11 @@ function showReasons(mk, idx) {
       <span class="rz-tag">${tag}</span> ${entry.text || ""}</li>`;
   }).join("");
   const pullNote = cand.pull_count > 0 ? ` ⚡引っ張り${cand.pull_count}箇所` : "";
-  el(`reasons-${mk}`).innerHTML = `<div class="reasons-head">「${cand.number_str}」の選出根拠${pullNote}</div>
+  const panel = el(`reasons-${src}-${mk}`);
+  if (!panel) return;
+  panel.innerHTML = `<div class="reasons-head">「${cand.number_str}」の選出根拠${pullNote}</div>
     <ul class="reason-list">${rows}</ul>`;
-  // 選択中カードをハイライト
-  const grid = el(`reasons-${mk}`).previousElementSibling;
+  const grid = panel.previousElementSibling;
   if (grid) grid.querySelectorAll(".cand").forEach((c, i) => c.classList.toggle("selected", i === idx));
 }
 
@@ -323,16 +331,17 @@ function renderWeekday() {
   order.forEach(k => { if (wds[k]) for (let d = 0; d < 10; d++) vals.push(wds[k].overall[String(d)]); });
   const lo = Math.min(...vals), hi = Math.max(...vals);
 
-  const head = "<tr><th>曜日＼数字</th>" + Array.from({ length: 10 }, (_, d) => `<th>${d}</th>`).join("") + "<th>件数</th><th>平均合計</th><th>ホット</th></tr>";
+  const head = "<tr><th>曜日＼数字</th>" + Array.from({ length: 10 }, (_, d) => `<th>${d}</th>`).join("") + "<th>件数</th><th>平均合計</th><th>引っ張り率</th><th>ホット</th></tr>";
   let rows = "";
   order.forEach(k => {
     const wd = wds[k]; if (!wd) return;
     const isNext = k === next;
     let cells = "";
     for (let d = 0; d < 10; d++) { const v = wd.overall[String(d)]; cells += `<td style="background:${heatColor(v, lo, hi)}">${v}</td>`; }
-    rows += `<tr class="${isNext ? "wd-next" : ""}"><th>${wd.label}${isNext ? " ⭐" : ""}</th>${cells}<td>${wd.count}</td><td>${wd.avg_sum}</td><td class="mark">${wd.hot.join(",")}</td></tr>`;
+    rows += `<tr class="${isNext ? "wd-next" : ""}"><th>${wd.label}${isNext ? " ⭐" : ""}</th>${cells}<td>${wd.count}</td><td>${wd.avg_sum}</td><td>${(wd.pull_average).toFixed(2)}</td><td class="mark">${wd.hot.join(",")}</td></tr>`;
   });
 
+  // 次回曜日の各位ホット
   let nextHtml = "";
   if (next && wds[next]) {
     const wd = wds[next];
@@ -347,11 +356,62 @@ function renderWeekday() {
       <div class="pos-row">${posHtml}</div></div>`;
   }
 
+  // 曜日別 平均合計・引っ張り率の比較バー
+  const sums = order.map(k => wds[k] ? wds[k].avg_sum : 0);
+  const pulls = order.map(k => wds[k] ? wds[k].pull_average : 0);
+  const smax = Math.max(...sums, 1), pmax = Math.max(...pulls, 0.001);
+  const cmpRows = order.map(k => {
+    const wd = wds[k]; if (!wd) return "";
+    const isNext = k === next;
+    return `<div class="bar-row"><span class="lbl">${wd.label}${isNext ? "⭐" : ""}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${wd.avg_sum / smax * 100}%"></div></div>
+      <span class="val">合計${wd.avg_sum}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${wd.pull_average / pmax * 100}%;background:var(--cold)"></div></div>
+      <span class="val">引${wd.pull_average.toFixed(2)}</span></div>`;
+  }).join("");
+  const cmpHtml = `<div class="card"><h3>📊 曜日別 平均合計・引っ張り率</h3>
+    <p class="note">左=平均合計、右(青)=1回あたりの引っ張り位置数。引っ張りの基準は各位≈10%（${positions().length}桁で約${(positions().length * 0.1).toFixed(1)}）。</p>
+    ${cmpRows}</div>`;
+
+  // 次回曜日の合計値分布チャート
+  let sumChartHtml = "";
+  if (next && wds[next] && wds[next].sum_distribution) {
+    sumChartHtml = `<div class="card"><h3>📈【${wds[next].label}曜】の合計値分布（${wds[next].count}回）</h3>
+      <p class="note">平均${wds[next].avg_sum}・ばらつき±${wds[next].sum_std}。</p>
+      <div class="chart-container chart-small"><canvas id="wdSumChart"></canvas></div></div>`;
+  }
+
+  // 曜日専用予想
+  const wp = state.data.weekday_predictions;
+  let predHtml = "";
+  if (wp && wp.predictions) {
+    predHtml = `<div class="card"><h3>🤖⭐【${wp.label}曜】専用AI予想（${wp.count}回のデータのみ）</h3>
+      <p class="note">次回抽選の曜日のデータだけで算出した「出し分け」予想です。各モード10点・候補クリックで根拠。差はほぼ揺らぎですが読み物としてどうぞ。</p></div>`;
+    for (const mk of MODE_ORDER) { if (wp.predictions[mk]) predHtml += predCardHtml("wd", mk, wp.predictions[mk]); }
+  }
+
   el("weekdayResult").innerHTML = `
     ${nextHtml}
+    ${predHtml}
     <div class="card"><h3>📅 曜日別 数字の出やすさ（全期間 ${w.total_draws}回）</h3>
       <p class="note">${next && wds[next] ? `次回抽選は【${wds[next].label}曜】⭐ ｜ ` : ""}各曜日で0〜9の出現率(%)。赤いほど多く・青いほど少ない。本来は各10%（公平なくじ）。</p>
-      <div class="grid-wrap"><table class="appear-grid">${head}${rows}</table></div></div>`;
+      <div class="grid-wrap"><table class="appear-grid">${head}${rows}</table></div></div>
+    ${cmpHtml}
+    ${sumChartHtml}`;
+
+  // 曜日専用予想の根拠を初期表示
+  if (wp && wp.predictions) { for (const mk of MODE_ORDER) { if (wp.predictions[mk]) showReasons("wd", mk, 0); } }
+
+  // 合計値チャート描画
+  if (next && wds[next] && wds[next].sum_distribution) {
+    destroyChart("wdSum");
+    const dist = wds[next].sum_distribution;
+    state.charts.wdSum = new Chart(el("wdSumChart"), {
+      type: "bar",
+      data: { labels: Object.keys(dist), datasets: [{ data: Object.values(dist).map(Number), backgroundColor: isN4() ? "#7a86c4" : "#c49a3f" }] },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { title: { display: true, text: "合計値" } } } },
+    });
+  }
 }
 
 // ---- モンテカルロ ----
