@@ -39,22 +39,27 @@ GAMES = {
 }
 
 # 予想の重み（モードごとにベースを複製して調整）
+# ナンバーズは記憶なしに近く、引っ張り(前回反復)は「予測力」を持たない。重みを付けると
+# 引っ張りが不自然に多発するため、pull は極小にして自然な基準率(各位≈10%)で現れるようにする。
 BASE_WEIGHTS = {
     "freq": 1.0,     # 全期間の各位頻度
-    "recent": 1.0,   # 直近トレンド
-    "drought": 1.0,  # 未出（各位の平均間隔比）
-    "pull": 1.0,     # 引っ張り（同位置反復）
-    "cycle": 1.0,    # 周期
+    "recent": 1.2,   # 直近トレンド
+    "drought": 0.7,  # 未出（各位の平均間隔比）
+    "pull": 0.1,     # 引っ張り（同位置反復）— 総合予想で基準率(≈1/3)になるよう極小
+    "cycle": 0.8,    # 周期
     "rf": 1.2,       # RandomForest
     "lstm": 1.2,     # LSTM
 }
 
-# 各モードの重み調整（signature 因子を強調）
+# 各モードが提示する予想数字の個数
+N_PREDICTIONS = 10
+
+# 各モードの重み調整（signature 因子を強調）。pull は base が小さいので倍率を大きめに。
 MODE_WEIGHTS = {
     "balanced": {},
     "frequency_heavy": {"freq": 2.2, "recent": 1.4},
-    "recent_heavy": {"recent": 2.4, "pull": 1.4},
-    "pull_heavy": {"pull": 2.6, "recent": 1.3},
+    "recent_heavy": {"recent": 2.4},
+    "pull_heavy": {"pull": 12.0, "recent": 1.3},
     "cycle_heavy": {"cycle": 2.6},
     "ml_heavy": {"rf": 2.4, "lstm": 2.4},
 }

@@ -120,32 +120,35 @@ function renderCurrent() {
 function renderPrediction() {
   const preds = period().predictions;
   let html = `<div class="card"><h3>🤖 第${state.data.latest_round + 1}回 予想（${el("periodDisplay").textContent}）</h3>
-    <p class="note">各位ごとに有力数字を選出。モードごとに重視する指標が異なります。信頼度はモンテカルロによる選出割合です。</p></div>`;
+    <p class="note">各モードが重視する指標で候補を10点ずつ提示します（#1＝最有力）。⚡は前回と同じ位置に同じ数字が出る「引っ張り」を含む候補。ナンバーズは各位0-9がほぼ一様なので引っ張りは平均約1/3の頻度で自然に現れます。</p></div>`;
   for (const mk of MODE_ORDER) {
     const p = preds[mk];
     if (!p) continue;
     const mc = p.monte_carlo || {};
-    const posCells = p.per_position.map(e => `
-      <div class="pos-cell">
-        <div class="plabel">${e.label}</div>
-        ${digitBadge(e.digit)}
-        <div class="cands">候補: ${e.candidates.map(c => `${c.digit}(${c.confidence}%)`).join(" ")}</div>
-      </div>`).join("");
+    const cands = p.candidates || [{ digits: p.digits, number_str: p.number_str, sum: p.metrics.sum, shape: p.metrics.shape, pull_count: 0 }];
+    const cardHtml = cands.map((c, i) => {
+      const pull = c.pull_count > 0 ? `<span class="pull-tag" title="引っ張り${c.pull_count}箇所">⚡${c.pull_count}</span>` : "";
+      return `<div class="cand ${i === 0 ? "top" : ""}">
+        ${i === 0 ? '<span class="cand-rank">#1</span>' : `<span class="cand-rank">${i + 1}</span>`}
+        <span class="cand-num">${c.number_str}</span>
+        <span class="cand-meta">計${c.sum}・${c.shape}${pull}</span>
+      </div>`;
+    }).join("");
     const reasons = p.per_position.map(e => `<li>▸ ${e.reason_text}</li>`).join("");
     const conf = [];
-    if (mc.straight_pct != null) conf.push(`ストレート ${mc.straight_pct}%`);
-    if (mc.box_pct != null) conf.push(`ボックス ${mc.box_pct}%`);
-    if (mc.mini_pct != null) conf.push(`ミニ ${mc.mini_pct}%`);
-    const tsum = p.metrics.target_sum ? ` ｜ 目標合計 ${p.metrics.target_sum}` : "";
+    if (mc.straight_pct != null && mc.straight_pct > 0) conf.push(`#1 ストレート ${mc.straight_pct}%`);
+    if (mc.box_pct != null && mc.box_pct > 0) conf.push(`ボックス ${mc.box_pct}%`);
+    if (mc.mini_pct != null && mc.mini_pct > 0) conf.push(`ミニ ${mc.mini_pct}%`);
+    const tsum = p.metrics.target_sum ? ` ｜ 目標合計帯 ${p.metrics.target_sum}` : "";
+    const weakNote = mk === "pull_heavy" ? '<span class="pill" style="color:var(--hot)">参考（記憶なしゲームでは当たりにくい）</span>' : "";
     html += `<div class="pred-card">
       <div class="pred-head">
-        <span class="pred-mode">${p.mode_name}</span>
-        <span class="pred-conf">${conf.join(" ／ ")}</span>
+        <span class="pred-mode">${p.mode_name} ${weakNote}</span>
+        <span class="pred-conf">${conf.join(" ／ ")}${tsum}</span>
       </div>
-      ${numberBadges(p.digits, true)}
-      <div class="pred-metrics">合計 ${p.metrics.sum} ｜ 奇偶 ${p.metrics.odd_even} ｜ 大小 ${p.metrics.big_small} ｜ ${p.metrics.shape}${tsum}</div>
-      <div class="pos-row">${posCells}</div>
-      <ul class="reason-list">${reasons}</ul>
+      <div class="cand-grid">${cardHtml}</div>
+      <details class="pred-detail"><summary>#1「${p.number_str}」の選出根拠</summary>
+        <ul class="reason-list">${reasons}</ul></details>
     </div>`;
   }
   el("predictionResult").innerHTML = html;

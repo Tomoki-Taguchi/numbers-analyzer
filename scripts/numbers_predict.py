@@ -13,7 +13,7 @@ from collections import Counter
 
 from numbers_common import (
     BASE_WEIGHTS, MODE_WEIGHTS, MODE_NAMES, MODE_SIGNATURE,
-    ECHO_FACTORS, ECHO_REDUCTION, normalize, _seed_from_str,
+    ECHO_FACTORS, ECHO_REDUCTION, N_PREDICTIONS, normalize, _seed_from_str,
 )
 
 PULL_GRADIENT = [0.40, 0.25, 0.15, 0.12, 0.08]
@@ -68,13 +68,54 @@ def compute_factors(freq_data, cycle_data, rf_scores, lstm_scores, draws, D):
 
 
 def effective_weights(mode_key):
-    """モードの重み: BASE×MODE倍率、非署名のecho因子は削減。"""
+    """モードの重み: BASE×MODE倍率、署名モードのみ非署名echo因子を削減。
+
+    総合予想(balanced=署名なし)には削減を掛けない。掛けると頻度/直近/ML等が一律に
+    削られ、相対的に pull/drought が支配してしまうため（引っ張り多発の原因だった）。
+    """
     w = {f: BASE_WEIGHTS[f] * MODE_WEIGHTS.get(mode_key, {}).get(f, 1.0) for f in BASE_WEIGHTS}
     sig = MODE_SIGNATURE.get(mode_key, set())
-    for f in ECHO_FACTORS:
-        if f not in sig:
-            w[f] *= (1 - ECHO_REDUCTION)
+    if sig:  # 署名のあるモード（*_heavy）だけ差別化のため非署名echoを削減
+        for f in ECHO_FACTORS:
+            if f not in sig:
+                w[f] *= (1 - ECHO_REDUCTION)
     return w
+
+
+def rank_candidates(base_scores, D, n, seed_str):
+    """base_scores の重み分布から n 個の異なる予想数字を生成し、結合スコア順に返す。
+
+    argmax(#1)を必ず含み、残りは重み付き抽選で多様性を確保する。各位独立サンプリング。
+    """
+    rng = random.Random(_seed_from_str(seed_str))
+    wpos = {}
+    for p in range(D):
+        w = [max(0.0, base_scores[p][d]) for d in range(10)]
+        s = sum(w) or 1.0
+        wpos[p] = [x / s for x in w]
+
+    def joint(combo):
+        return sum(base_scores[p][combo[p]] for p in range(D))
+
+    def pick(p):
+        r = rng.random()
+        acc = 0.0
+        for d in range(10):
+            acc += wpos[p][d]
+            if r <= acc:
+                return d
+        return 9
+
+    argmax = tuple(max(range(10), key=lambda d: base_scores[p][d]) for p in range(D))
+    seen = {argmax: joint(argmax)}
+    attempts = 0
+    while len(seen) < n and attempts < n * 60:
+        combo = tuple(pick(p) for p in range(D))
+        if combo not in seen:
+            seen[combo] = joint(combo)
+        attempts += 1
+    ranked = sorted(seen.items(), key=lambda kv: -kv[1])[:n]
+    return [list(c) for c, _ in ranked]
 
 
 def weighted_base(factors, weights, D):
@@ -207,6 +248,28 @@ def _metrics(digits, D):
     }
 
 
+def _pull_count(digits, last_digits):
+    """前回と同じ位置で同じ数字（引っ張り）の個数。"""
+    if not last_digits:
+        return 0
+    return sum(1 for a, b in zip(digits, last_digits) if a == b)
+
+
+def _candidate_entry(digits, D, last_digits):
+    pc = _pull_count(digits, last_digits)
+    return {
+        "digits": digits,
+        "number_str": "".join(str(d) for d in digits),
+        "sum": sum(digits),
+        "shape": _shape_label(digits),
+        "pull_count": pc,
+    }
+
+
+def _candidate_list(digits_list, D, last_digits):
+    return [_candidate_entry(dg, D, last_digits) for dg in digits_list]
+
+
 def _build_position_entries(digits, base, factors, weights, freq_data, cycle_data,
                             rf_scores, lstm_scores, draws, D, positions):
     entries = []
@@ -244,10 +307,15 @@ def generate_prediction(base_data, freq_data, cycle_data, rf_scores, lstm_scores
     factors = base_data["factors"]
     weights = effective_weights(mode_key)
     base = weighted_base(factors, weights, D)
-
-    digits = [max(range(10), key=lambda d: base[p][d]) for p in range(D)]
     positions = game_cfg["positions"]
     has_mini = game_cfg["has_mini"]
+    last_digits = base_data.get("last_digits", [])
+
+    # N個の予想数字（#1=argmax、以降は重み付き抽選で多様化）
+    ranked = rank_candidates(base, D, N_PREDICTIONS,
+                             seed_str=f"{date_str}_{game_cfg['digits']}_{mode_key}_{period_label}_cand")
+    digits = ranked[0]
+    candidates = _candidate_list(ranked, D, last_digits)
 
     mc = monte_carlo_confidence(
         base, D, has_mini, digits, n_trials=mc_trials,
@@ -266,6 +334,7 @@ def generate_prediction(base_data, freq_data, cycle_data, rf_scores, lstm_scores
         "mode_name": MODE_NAMES[mode_key],
         "digits": digits,
         "number_str": "".join(str(d) for d in digits),
+        "candidates": candidates,
         "per_position": entries,
         "metrics": metrics,
         "monte_carlo": mc,
@@ -290,18 +359,28 @@ def generate_sum_target_prediction(base_data, digit_sum_data, freq_data, cycle_d
     lo, hi = _band_range(target_band, D)
     center = (lo + hi) / 2
 
-    # 2) 各位top-K候補の直積から、合計が帯内かつ総スコア最大の組合せを選ぶ
+    # 2) 各位top-K候補の直積を、合計が帯内か＋総スコアで順位付け → 上位N個
+    last_digits = base_data.get("last_digits", [])
     topk = {p: sorted(range(10), key=lambda d: base[p][d], reverse=True)[:SUM_TARGET_TOPK] for p in range(D)}
-    best = None
+    scored = []
     for combo in _product(topk, D):
         s = sum(combo)
         score = sum(base[p][combo[p]] for p in range(D))
         in_band = lo <= s <= hi
-        # 帯内を優先、その中で高スコア、外れなら中心への近さ
-        key = (1 if in_band else 0, score if in_band else -abs(s - center))
-        if best is None or key > best[0]:
-            best = (key, list(combo))
-    digits = best[1] if best else [max(range(10), key=lambda d: base[p][d]) for p in range(D)]
+        scored.append(((1 if in_band else 0, score if in_band else -abs(s - center)), list(combo)))
+    scored.sort(key=lambda kv: kv[0], reverse=True)
+    ranked, seen = [], set()
+    for _, combo in scored:
+        t = tuple(combo)
+        if t not in seen:
+            seen.add(t)
+            ranked.append(combo)
+        if len(ranked) >= N_PREDICTIONS:
+            break
+    if not ranked:
+        ranked = [[max(range(10), key=lambda d: base[p][d]) for p in range(D)]]
+    digits = ranked[0]
+    candidates = _candidate_list(ranked, D, last_digits)
 
     mc = monte_carlo_confidence(
         base, D, has_mini, digits, n_trials=mc_trials,
@@ -319,6 +398,7 @@ def generate_sum_target_prediction(base_data, digit_sum_data, freq_data, cycle_d
         "mode_name": MODE_NAMES["sum_target"],
         "digits": digits,
         "number_str": "".join(str(d) for d in digits),
+        "candidates": candidates,
         "per_position": entries,
         "metrics": metrics,
         "monte_carlo": mc,

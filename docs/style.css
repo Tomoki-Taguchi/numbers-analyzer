@@ -86,8 +86,22 @@ main { max-width: 960px; margin: 0 auto; padding: 1.3rem 1rem; }
 .pos-cell { border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem; text-align: center; }
 .pos-cell .plabel { font-size: 0.72rem; color: var(--text-muted); }
 .pos-cell .cands { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.3rem; }
-.reason-list { list-style: none; margin-top: 0.7rem; font-size: 0.78rem; color: var(--text-muted); }
+.reason-list { list-style: none; margin-top: 0.5rem; font-size: 0.78rem; color: var(--text-muted); }
 .reason-list li { padding: 0.2rem 0; border-top: 1px dashed var(--border); }
+
+/* Candidate grid (10 numbers per mode) */
+.cand-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 0.5rem; margin: 0.7rem 0 0.4rem; }
+.cand { position: relative; border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem 0.4rem 0.4rem; text-align: center; background: var(--bg-primary); }
+.cand.top { border-color: var(--gold); background: rgba(196,154,63,0.08); }
+.digit.n4 ~ .cand, .cand-num { font-variant-numeric: tabular-nums; }
+.cand-rank { position: absolute; top: 3px; left: 6px; font-size: 0.62rem; color: var(--text-muted); }
+.cand.top .cand-rank { color: var(--gold); font-weight: 700; }
+.cand-num { display: block; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.12em; color: var(--text); margin-top: 0.2rem; }
+.cand.top .cand-num { color: var(--gold-dim); }
+.cand-meta { display: block; font-size: 0.66rem; color: var(--text-muted); margin-top: 0.15rem; }
+.pull-tag { display: inline-block; margin-left: 0.25rem; color: var(--hot); font-weight: 700; }
+.pred-detail { margin-top: 0.3rem; }
+.pred-detail summary { font-size: 0.78rem; color: var(--gold-dim); cursor: pointer; }
 
 /* Digit grid (frequency / grid table) */
 .digit-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; margin-top: 0.6rem; }
