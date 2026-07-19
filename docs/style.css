@@ -105,6 +105,13 @@ main { max-width: 960px; margin: 0 auto; padding: 1.3rem 1rem; }
 .cand.selected { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold) inset; }
 .cand-reasons { margin-top: 0.6rem; border-top: 1px solid var(--border); padding-top: 0.5rem; }
 .reasons-head { font-size: 0.82rem; font-weight: 700; color: var(--gold-dim); margin-bottom: 0.2rem; }
+
+/* 全候補の選出根拠 一括表示 */
+.reasons-toggle { margin-top: 0.8rem; background: var(--gold); color: #fff; border: none; border-radius: 999px; padding: 0.5rem 1.3rem; font-size: 0.84rem; font-weight: 700; cursor: pointer; transition: background 0.15s, opacity 0.15s; }
+.reasons-toggle:hover { background: var(--gold-dim); }
+.reasons-toggle.on { background: var(--gold-dim); }
+.reasons-block { padding: 0.45rem 0; }
+.reasons-block + .reasons-block { border-top: 1px dashed var(--border); margin-top: 0.3rem; }
 .reason-list .rz-pos { display: inline-block; min-width: 3.2rem; color: var(--text); font-weight: 600; }
 .reason-list .rz-tag { display: inline-block; font-size: 0.68rem; padding: 0.02rem 0.35rem; border-radius: 999px; background: rgba(196,154,63,0.14); color: var(--gold-dim); margin-right: 0.3rem; }
 

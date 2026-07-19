@@ -9,6 +9,7 @@ const state = {
   periodKey: "all",
   activeTab: "prediction",
   charts: {},
+  allReasons: false, // true のとき全候補の選出根拠を一括表示
 };
 
 const MODE_ORDER = ["balanced", "frequency_heavy", "recent_heavy", "pull_heavy", "cycle_heavy", "ml_heavy", "sum_target"];
@@ -153,35 +154,79 @@ function _predBySource(src, mk) {
 function renderPrediction() {
   const preds = period().predictions;
   let html = `<div class="card"><h3>🤖 第${state.data.latest_round + 1}回 予想（${el("periodDisplay").textContent}）</h3>
-    <p class="note">各モードが重視する指標で候補を10点ずつ提示します（#1＝最有力）。候補をクリックすると選出根拠が出ます。⚡は前回と同じ位置に同じ数字が出る「引っ張り」を含む候補。ナンバーズは各位0-9がほぼ一様なので引っ張りは平均約1/3の頻度で自然に現れます。</p></div>`;
+    <p class="note">各モードが重視する指標で候補を10点ずつ提示します（#1＝最有力）。<strong>「全候補の選出根拠を表示」ボタン</strong>で全数字の根拠を一括表示、または候補をクリックで1件だけ表示できます。⚡は前回と同じ位置に同じ数字が出る「引っ張り」を含む候補。ナンバーズは各位0-9がほぼ一様なので引っ張りは平均約1/3の頻度で自然に現れます。</p>
+    ${reasonsToggleBtn()}</div>`;
   for (const mk of MODE_ORDER) {
     if (preds[mk]) html += predCardHtml("period", mk, preds[mk]);
   }
   el("predictionResult").innerHTML = html;
-  for (const mk of MODE_ORDER) { if (preds[mk]) showReasons("period", mk, 0); }
+  applyReasons("period", preds);
 }
 
-// 候補クリックで、その数字の各位の選出根拠を表示（src: 'period' | 'wd'）
-function showReasons(src, mk, idx) {
-  const pred = _predBySource(src, mk);
-  if (!pred) return;
-  const cand = (pred.candidates || [])[idx];
+const REASON_FACTOR = { freq: "頻度", recent: "直近", drought: "未出", pull: "引っ張り", cycle: "周期", rf: "RF", lstm: "LSTM" };
+
+// 1候補分の各位選出根拠リスト（<ul>）を組み立てる
+function reasonRowsHtml(pred, cand) {
   const table = pred.digit_reasons || [];
-  if (!cand) return;
-  const factorName = { freq: "頻度", recent: "直近", drought: "未出", pull: "引っ張り", cycle: "周期", rf: "RF", lstm: "LSTM" };
-  const rows = cand.digits.map((d, p) => {
+  const rows = (cand.digits || []).map((d, p) => {
     const entry = (table[p] && table[p].digits[String(d)]) || {};
-    const tag = factorName[entry.top_factor] || "";
+    const tag = REASON_FACTOR[entry.top_factor] || "";
     return `<li><span class="rz-pos">${(table[p] && table[p].label) || ""}</span>
       <span class="rz-tag">${tag}</span> ${entry.text || ""}</li>`;
   }).join("");
+  return `<ul class="reason-list">${rows}</ul>`;
+}
+
+// 候補クリックで、その数字1件の各位の選出根拠を表示（src: 'period' | 'wd'）
+function showReasons(src, mk, idx) {
+  if (state.allReasons) return; // 全表示中はクリックで折りたたまない
+  const pred = _predBySource(src, mk);
+  if (!pred) return;
+  const cand = (pred.candidates || [])[idx];
+  if (!cand) return;
   const pullNote = cand.pull_count > 0 ? ` ⚡引っ張り${cand.pull_count}箇所` : "";
   const panel = el(`reasons-${src}-${mk}`);
   if (!panel) return;
-  panel.innerHTML = `<div class="reasons-head">「${cand.number_str}」の選出根拠${pullNote}</div>
-    <ul class="reason-list">${rows}</ul>`;
+  panel.innerHTML = `<div class="reasons-head">「${cand.number_str}」の選出根拠${pullNote}</div>${reasonRowsHtml(pred, cand)}`;
   const grid = panel.previousElementSibling;
   if (grid) grid.querySelectorAll(".cand").forEach((c, i) => c.classList.toggle("selected", i === idx));
+}
+
+// 「選出根拠」ボタン: そのモードの全候補（10点）の根拠をまとめて表示
+function renderAllReasons(src, mk) {
+  const pred = _predBySource(src, mk);
+  if (!pred) return;
+  const panel = el(`reasons-${src}-${mk}`);
+  if (!panel) return;
+  panel.innerHTML = (pred.candidates || []).map((cand, i) => {
+    const pullNote = cand.pull_count > 0 ? ` ⚡引っ張り${cand.pull_count}箇所` : "";
+    return `<div class="reasons-block">
+      <div class="reasons-head">${i + 1}位「${cand.number_str}」の選出根拠${pullNote}</div>
+      ${reasonRowsHtml(pred, cand)}</div>`;
+  }).join("");
+  const grid = panel.previousElementSibling;
+  if (grid) grid.querySelectorAll(".cand").forEach(c => c.classList.remove("selected"));
+}
+
+// セクション（'period' | 'wd'）内の全カードの根拠表示を現在の状態に合わせる
+function applyReasons(src, preds) {
+  for (const mk of MODE_ORDER) {
+    if (!preds[mk]) continue;
+    if (state.allReasons) renderAllReasons(src, mk);
+    else showReasons(src, mk, 0);
+  }
+}
+
+// 全候補根拠の一括表示 ⇄ 個別表示 を切り替える
+function toggleAllReasons() {
+  state.allReasons = !state.allReasons;
+  renderCurrent();
+}
+
+// 一括表示トグルボタンのHTML
+function reasonsToggleBtn() {
+  const label = state.allReasons ? "🔽 選出根拠をたたむ" : "📖 全候補の選出根拠を表示";
+  return `<button class="reasons-toggle ${state.allReasons ? "on" : ""}" onclick="toggleAllReasons()">${label}</button>`;
 }
 
 // ---- 各位頻度 ----
@@ -386,7 +431,8 @@ function renderWeekday() {
   let predHtml = "";
   if (wp && wp.predictions) {
     predHtml = `<div class="card"><h3>🤖⭐【${wp.label}曜】専用AI予想（${wp.count}回のデータのみ）</h3>
-      <p class="note">次回抽選の曜日のデータだけで算出した「出し分け」予想です。各モード10点・候補クリックで根拠。差はほぼ揺らぎですが読み物としてどうぞ。</p></div>`;
+      <p class="note">次回抽選の曜日のデータだけで算出した「出し分け」予想です。各モード10点・<strong>「全候補の選出根拠を表示」ボタン</strong>または候補クリックで根拠。差はほぼ揺らぎですが読み物としてどうぞ。</p>
+      ${reasonsToggleBtn()}</div>`;
     for (const mk of MODE_ORDER) { if (wp.predictions[mk]) predHtml += predCardHtml("wd", mk, wp.predictions[mk]); }
   }
 
@@ -400,7 +446,7 @@ function renderWeekday() {
     ${sumChartHtml}`;
 
   // 曜日専用予想の根拠を初期表示
-  if (wp && wp.predictions) { for (const mk of MODE_ORDER) { if (wp.predictions[mk]) showReasons("wd", mk, 0); } }
+  if (wp && wp.predictions) applyReasons("wd", wp.predictions);
 
   // 合計値チャート描画
   if (next && wds[next] && wds[next].sum_distribution) {
