@@ -52,3 +52,4 @@ jobs:
           cmp -s /tmp/a.json /tmp/c.json \
             && echo "現状設定 と OMP固定 の結果は同一" \
             || echo "現状設定 と OMP固定 で結果が異なる"
+# probe B
