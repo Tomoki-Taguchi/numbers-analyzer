@@ -1,0 +1,82 @@
+# LSTM非決定性の切り分け用（原因特定後に削除する）
+name: Diag Determinism
+
+on:
+  workflow_dispatch:
+
+jobs:
+  diag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -r scripts/requirements.txt
+
+      - name: 環境
+        run: |
+          echo "--- CPU ---"
+          grep -m1 'model name' /proc/cpuinfo
+          grep -m1 'flags' /proc/cpuinfo | tr ' ' '\n' | grep -E '^(avx|avx2|avx512f|fma)$' | tr '\n' ' '; echo
+          nproc
+          echo "--- env ---"
+          echo "OMP_NUM_THREADS=${OMP_NUM_THREADS:-(unset)}  MKL_NUM_THREADS=${MKL_NUM_THREADS:-(unset)}"
+          python -c "import torch; print('torch', torch.__version__, 'threads', torch.get_num_threads(), 'interop', torch.get_num_interop_threads())"
+
+      - name: 同一プロセス内で2回実行して比較
+        run: |
+          cd scripts
+          python -c "
+import json, sys
+sys.path.insert(0,'.')
+from numbers_common import GAMES, load_data
+from numbers_ai import predict_lstm
+draws = load_data(GAMES['numbers3'])[-600:]
+a = predict_lstm(draws, 3)
+b = predict_lstm(draws, 3)
+print('同一プロセス内の再実行:', '一致' if a == b else '不一致')
+if a != b:
+    pa = a['per_position']['0']; pb = b['per_position']['0']
+    print('  位置0:', {k: (pa[k], pb[k]) for k in pa if pa[k] != pb[k]})
+"
+
+      - name: 別プロセスで2回実行して比較
+        run: |
+          cd scripts
+          cat > _one.py <<'PY'
+import json, sys
+sys.path.insert(0,'.')
+from numbers_common import GAMES, load_data
+from numbers_ai import predict_lstm
+draws = load_data(GAMES['numbers3'])[-600:]
+print(json.dumps(predict_lstm(draws, 3), sort_keys=True))
+PY
+          python _one.py > /tmp/r1.json
+          python _one.py > /tmp/r2.json
+          if cmp -s /tmp/r1.json /tmp/r2.json; then
+            echo "別プロセスの再実行: 一致"
+          else
+            echo "別プロセスの再実行: 不一致"
+            python - <<'PY'
+import json
+a=json.load(open('/tmp/r1.json'))['per_position']
+b=json.load(open('/tmp/r2.json'))['per_position']
+for p in a:
+    d={k:(a[p][k],b[p][k]) for k in a[p] if a[p][k]!=b[p][k]}
+    if d: print(' 位置',p,d)
+PY
+          fi
+
+      - name: OMP_NUM_THREADS=1 を固定して別プロセス2回
+        env:
+          OMP_NUM_THREADS: '1'
+          MKL_NUM_THREADS: '1'
+        run: |
+          cd scripts
+          python _one.py > /tmp/o1.json
+          python _one.py > /tmp/o2.json
+          cmp -s /tmp/o1.json /tmp/o2.json \
+            && echo "OMP固定での再実行: 一致" \
+            || echo "OMP固定での再実行: 不一致"
