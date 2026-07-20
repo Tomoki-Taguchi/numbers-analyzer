@@ -43,6 +43,10 @@ jobs:
           python _diag_determinism.py once > /tmp/d.json
           cmp -s /tmp/c.json /tmp/d.json && echo "OMP固定: 一致" || echo "OMP固定: 不一致"
 
+      - name: 指紋（CPU + LSTM出力ハッシュ）
+        working-directory: scripts
+        run: python _diag_determinism.py fingerprint
+
       - name: 参考 — 別プロセス実行同士の突き合わせ
         run: |
           cmp -s /tmp/a.json /tmp/c.json \

@@ -66,5 +66,23 @@ def cmd_once():
     print(json.dumps(predict_lstm(_draws(), 3), sort_keys=True))
 
 
+def cmd_fingerprint():
+    """CPUとLSTM出力のハッシュを出す。実行(マシン)をまたいで突き合わせる用。"""
+    import hashlib
+    from numbers_ai import predict_lstm
+    cpu = "?"
+    try:
+        with open("/proc/cpuinfo") as f:
+            for line in f:
+                if line.startswith("model name"):
+                    cpu = line.split(":", 1)[1].strip()
+                    break
+    except OSError:
+        pass
+    blob = json.dumps(predict_lstm(_draws(), 3), sort_keys=True)
+    print(f"FINGERPRINT cpu={cpu!r} sha256={hashlib.sha256(blob.encode()).hexdigest()[:16]}")
+
+
 if __name__ == "__main__":
-    {"env": cmd_env, "inproc": cmd_inproc, "once": cmd_once}[sys.argv[1]]()
+    {"env": cmd_env, "inproc": cmd_inproc, "once": cmd_once,
+     "fingerprint": cmd_fingerprint}[sys.argv[1]]()
