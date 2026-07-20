@@ -37,6 +37,15 @@
 - [x] GitHub public repo作成・push・Pages有効化（ライブ200・描画確認済）
 - [~] gh workflow run（CIパイプライン検証・実行中）
 
+## Phase 8: 抽選結果の手入力（当日夜に次回予想を出す）
+発表は当日18:45頃だが自動更新は翌朝9時。その差を埋める。
+- [x] add_draw.py（手入力・桁数/回号/欠番の検証・`--if-missing`で取得済みなら空振り）
+- [x] 予想の種を実行日→**予想対象の回号**へ変更（手入力の予想が翌朝に上書きされない）
+- [x] backfill/backtest も回号ベースの種に統一（本番と同じ予想を再現）
+- [x] update.yml に `workflow_dispatch` 入力（N3/N4/抽選日）を追加。取得→手入力の順
+- [x] 検証: 回号ごとの決定性 / 別回号で変化 / 欠番時も回号がずれない / E2E（AIスタブ）
+- [ ] 実運用で1回まわす（Actions手動実行 → サイト反映確認）
+
 ## レビュー
 - ライブ: https://tomoki-taguchi.github.io/numbers-analyzer/
 - リポジトリ: https://github.com/Tomoki-Taguchi/numbers-analyzer

@@ -134,7 +134,11 @@ def calc_mode_stats(archive, D, has_mini):
 
 
 def backfill_missing_archive(archive, all_draws, last_updated, compute_periods_fn):
-    """アーカイブ開始以降に欠けた回を、その時点データで再構築（ロト6同様の範囲）。"""
+    """アーカイブ開始以降に欠けた回を、その時点データで再構築（ロト6同様の範囲）。
+
+    compute_periods_fn は (その時点までの draws, 予想対象の回号) を受け取る。
+    回号を渡すのは、本番と同じ種で予想を再現するため（欠番があっても正しく対応付く）。
+    """
     if not archive:
         return
     archived = {e["predicted_round"] for e in archive}
@@ -147,7 +151,7 @@ def backfill_missing_archive(archive, all_draws, last_updated, compute_periods_f
         if len(hist) < max(PERIOD_SIZES):
             continue
         print(f"Backfilling archive for round {r} (data up to {hist[-1]['round']})")
-        periods, labels = compute_periods_fn(hist)
+        periods, labels = compute_periods_fn(hist, r)
         archive.append(build_archive_entry(r, hist[-1]["round"], periods, labels, last_updated))
 
 
@@ -157,11 +161,14 @@ def _uniform_ai(D):
     return {"per_position": {str(p): {str(d): 0.1 for d in range(10)} for p in range(D)}}
 
 
-def run_backtest(all_draws, D, game_cfg, n_rounds=BACKTEST_ROUNDS, date_str="backtest"):
+def run_backtest(all_draws, D, game_cfg, n_rounds=BACKTEST_ROUNDS, seed_key_fn=None):
     """直近 n_rounds を統計モードで look-ahead 無しに再現し、ヒット率を集計。
 
     RF/LSTM は一様スコア（=ランキングに影響しない）を渡し、統計モードのみ評価する。
     予想は全期間(all)の分析で生成（安定重視）。高速（モデル学習なし）。
+
+    seed_key_fn は回号から予想の種を作る関数（本番と同じもの）。各回を本番と同じ
+    種で再現するために渡す。未指定なら固定種で全回を回す。
     """
     has_mini = game_cfg["has_mini"]
     total = len(all_draws)
@@ -173,6 +180,7 @@ def run_backtest(all_draws, D, game_cfg, n_rounds=BACKTEST_ROUNDS, date_str="bac
     for i in range(start, total):
         hist = all_draws[:i]
         actual = all_draws[i]["digits"]
+        seed_key = seed_key_fn(all_draws[i]["round"]) if seed_key_fn else "backtest"
         freq = stats.analyze_frequency(hist, D)
         cyc = stats.analyze_cycle(hist, D)
         dsum = stats.analyze_digit_sum(hist, D)
@@ -181,10 +189,10 @@ def run_backtest(all_draws, D, game_cfg, n_rounds=BACKTEST_ROUNDS, date_str="bac
         for mk in STAT_MODES:
             if mk == "sum_target":
                 pred = generate_sum_target_prediction(
-                    base_data, dsum, freq, cyc, ai, ai, hist, D, game_cfg, "all", date_str, mc_trials=0)
+                    base_data, dsum, freq, cyc, ai, ai, hist, D, game_cfg, "all", seed_key, mc_trials=0)
             else:
                 pred = generate_prediction(
-                    base_data, freq, cyc, ai, ai, hist, D, game_cfg, mk, "all", date_str, mc_trials=0)
+                    base_data, freq, cyc, ai, ai, hist, D, game_cfg, mk, "all", seed_key, mc_trials=0)
             st, bx, mn, pm = _score_hit(pred["digits"], actual, has_mini)
             a = agg[mk]
             a["total"] += 1

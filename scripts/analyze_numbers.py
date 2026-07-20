@@ -19,12 +19,14 @@ from numbers_predict import compute_factors, run_predictions
 import numbers_archive as arc
 
 
-def _date_str():
-    # 決定性のため実行日を種にする（同日・同ゲームは同結果）
-    return date.today().isoformat()
+def _seed_key(next_round):
+    # 決定性のため「予想対象の回号」を種にする（同回号・同ゲームは同結果）。
+    # 実行日に依存しないので、抽選結果を手入力して夜のうちに出した予想と、
+    # 翌朝の自動更新が出す予想が一致する。
+    return f"r{next_round}"
 
 
-def analyze_period(draws, D, game_cfg, period_label, date_str):
+def analyze_period(draws, D, game_cfg, period_label, seed_key):
     """1期間分の分析＋予想を計算して返す。"""
     freq = stats.analyze_frequency(draws, D)
     grid = stats.build_appearance_grid(draws, D)
@@ -38,7 +40,7 @@ def analyze_period(draws, D, game_cfg, period_label, date_str):
 
     base_data = compute_factors(freq, cycle, rf, lstm, draws, D)
     predictions = run_predictions(
-        base_data, freq, cycle, rf, lstm, dsum, draws, D, game_cfg, period_label, date_str)
+        base_data, freq, cycle, rf, lstm, dsum, draws, D, game_cfg, period_label, seed_key)
 
     # 出力用に band_weights（内部用）を除去
     dsum_out = {k: v for k, v in dsum.items() if k != "band_weights"}
@@ -72,13 +74,13 @@ def analyze_period(draws, D, game_cfg, period_label, date_str):
     }
 
 
-def compute_periods(draws, D, game_cfg, date_str):
+def compute_periods(draws, D, game_cfg, seed_key):
     """全期間＋各直近N回の分析・予想を計算し、(periods, period_labels) を返す。"""
-    periods = {"all": analyze_period(draws, D, game_cfg, "all", date_str)}
+    periods = {"all": analyze_period(draws, D, game_cfg, "all", seed_key)}
     for size in PERIOD_SIZES:
         if len(draws) < size:
             continue
-        periods[str(size)] = analyze_period(draws[-size:], D, game_cfg, str(size), date_str)
+        periods[str(size)] = analyze_period(draws[-size:], D, game_cfg, str(size), seed_key)
 
     period_labels = []
     for size in PERIOD_SIZES:
@@ -100,14 +102,18 @@ def run(game: str):
     import json
     game_cfg = GAMES[game]
     D = game_cfg["digits"]
-    date_str = _date_str()
     print(f"=== {game_cfg['label']} Analyzer ===")
 
     draws = load_data(game_cfg)
     print(f"Loaded {len(draws)} draws (第{draws[0]['round']}回〜第{draws[-1]['round']}回)")
 
+    latest_round = draws[-1]["round"]
+    next_round = latest_round + 1
+    seed_key = _seed_key(next_round)
+    last_updated = date.today().isoformat()
+
     print("--- 全期間＋各直近N回の分析・予想 ---")
-    periods, period_labels = compute_periods(draws, D, game_cfg, date_str)
+    periods, period_labels = compute_periods(draws, D, game_cfg, seed_key)
 
     # 曜日別傾向（全期間で1回だけ計算）
     weekday = stats.analyze_weekday(draws, D)
@@ -126,7 +132,7 @@ def run(game: str):
             wlstm = predict_lstm(wsub, D)
             wbase = compute_factors(wf, wc, wrf, wlstm, wsub, D)
             wpreds = run_predictions(wbase, wf, wc, wrf, wlstm, wds, wsub, D,
-                                     game_cfg, f"wd{nw}", date_str)
+                                     game_cfg, f"wd{nw}", seed_key)
             weekday_predictions = {
                 "weekday": nw, "label": stats.WEEKDAY_LABELS[nw], "count": len(wsub),
                 "predictions": wpreds,
@@ -135,13 +141,11 @@ def run(game: str):
     # アーカイブ
     archive_path = game_cfg["archive_path"]
     archive = arc.load_archive(archive_path)
-    latest_round = draws[-1]["round"]
-    next_round = latest_round + 1
-    last_updated = date_str
 
+    # 遡って埋める分も「その回号の種」で計算する（本番と同じ予想が再現される）
     arc.backfill_missing_archive(
         archive, draws, last_updated,
-        compute_periods_fn=lambda hist: compute_periods(hist, D, game_cfg, date_str))
+        compute_periods_fn=lambda hist, r: compute_periods(hist, D, game_cfg, _seed_key(r)))
     arc.verify_archive(archive, draws, game_cfg["has_mini"])
 
     existing = next((e for e in archive if e["predicted_round"] == next_round), None)
@@ -158,7 +162,7 @@ def run(game: str):
     mode_stats = arc.calc_mode_stats(archive, D, game_cfg["has_mini"])
 
     print("--- 軽量バックテスト（統計モード・直近{}回） ---".format(arc.BACKTEST_ROUNDS))
-    backtest = arc.run_backtest(draws, D, game_cfg, date_str=date_str)
+    backtest = arc.run_backtest(draws, D, game_cfg, seed_key_fn=_seed_key)
     print(f"  backtest rounds: {backtest['rounds_tested']}")
 
     output = {

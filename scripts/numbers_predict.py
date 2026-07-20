@@ -320,7 +320,7 @@ def _build_position_entries(digits, base, factors, weights, freq_data, cycle_dat
 # ---- 予想本体 ----
 
 def generate_prediction(base_data, freq_data, cycle_data, rf_scores, lstm_scores,
-                        draws, D, game_cfg, mode_key, period_label, date_str, mc_trials=10000):
+                        draws, D, game_cfg, mode_key, period_label, seed_key, mc_trials=10000):
     factors = base_data["factors"]
     weights = effective_weights(mode_key)
     base = weighted_base(factors, weights, D)
@@ -330,13 +330,13 @@ def generate_prediction(base_data, freq_data, cycle_data, rf_scores, lstm_scores
 
     # N個の予想数字（#1=argmax、以降は重み付き抽選で多様化）
     ranked = rank_candidates(base, D, N_PREDICTIONS,
-                             seed_str=f"{date_str}_{game_cfg['digits']}_{mode_key}_{period_label}_cand")
+                             seed_str=f"{seed_key}_{game_cfg['digits']}_{mode_key}_{period_label}_cand")
     digits = ranked[0]
     candidates = _candidate_list(ranked, D, last_digits)
 
     mc = monte_carlo_confidence(
         base, D, has_mini, digits, n_trials=mc_trials,
-        seed_str=f"{date_str}_{game_cfg['digits']}_{mode_key}_{period_label}_mc",
+        seed_str=f"{seed_key}_{game_cfg['digits']}_{mode_key}_{period_label}_mc",
     )
     entries = _build_position_entries(digits, base, factors, weights, freq_data,
                                       cycle_data, rf_scores, lstm_scores, draws, D, positions)
@@ -363,7 +363,7 @@ def generate_prediction(base_data, freq_data, cycle_data, rf_scores, lstm_scores
 
 def generate_sum_target_prediction(base_data, digit_sum_data, freq_data, cycle_data,
                                    rf_scores, lstm_scores, draws, D, game_cfg,
-                                   period_label, date_str, mc_trials=10000):
+                                   period_label, seed_key, mc_trials=10000):
     """合計値帯を確率的に選び、各位top-K内で合計を寄せる2段予想。"""
     factors = base_data["factors"]
     weights = effective_weights("balanced")
@@ -373,7 +373,7 @@ def generate_sum_target_prediction(base_data, digit_sum_data, freq_data, cycle_d
 
     # 1) 目標帯を band_weights から決定的に抽選
     bw = digit_sum_data.get("band_weights", {})
-    rng = random.Random(_seed_from_str(f"{date_str}_{game_cfg['digits']}_sum_target_{period_label}"))
+    rng = random.Random(_seed_from_str(f"{seed_key}_{game_cfg['digits']}_sum_target_{period_label}"))
     target_band = _weighted_pick(bw, rng)
     lo, hi = _band_range(target_band, D)
     center = (lo + hi) / 2
@@ -403,7 +403,7 @@ def generate_sum_target_prediction(base_data, digit_sum_data, freq_data, cycle_d
 
     mc = monte_carlo_confidence(
         base, D, has_mini, digits, n_trials=mc_trials,
-        seed_str=f"{date_str}_{game_cfg['digits']}_sum_target_{period_label}_mc",
+        seed_str=f"{seed_key}_{game_cfg['digits']}_sum_target_{period_label}_mc",
     )
     entries = _build_position_entries(digits, base, factors, weights, freq_data,
                                       cycle_data, rf_scores, lstm_scores, draws, D, positions)
@@ -430,15 +430,15 @@ def generate_sum_target_prediction(base_data, digit_sum_data, freq_data, cycle_d
 
 
 def run_predictions(base_data, freq_data, cycle_data, rf_scores, lstm_scores,
-                    digit_sum_data, draws, D, game_cfg, period_label, date_str):
+                    digit_sum_data, draws, D, game_cfg, period_label, seed_key):
     preds = {}
     for mode_key in MODE_WEIGHTS:  # balanced, frequency_heavy, ...
         preds[mode_key] = generate_prediction(
             base_data, freq_data, cycle_data, rf_scores, lstm_scores,
-            draws, D, game_cfg, mode_key, period_label, date_str)
+            draws, D, game_cfg, mode_key, period_label, seed_key)
     preds["sum_target"] = generate_sum_target_prediction(
         base_data, digit_sum_data, freq_data, cycle_data, rf_scores, lstm_scores,
-        draws, D, game_cfg, period_label, date_str)
+        draws, D, game_cfg, period_label, seed_key)
     return preds
 
 

@@ -5,7 +5,22 @@ on:
   schedule:
     # ナンバーズは平日抽選（月〜金 夜）。翌未明(UTC)に更新。JST 9:00頃 = UTC 0:00。
     - cron: '0 0 * * 2,3,4,5,6'   # 火〜土 UTC 0:00 = 平日抽選の翌朝JST
+  # 手動実行。当選番号を入れると、その回を手入力してから分析する（当日夜に次回予想を出す用）。
+  # 空欄ならいつも通りスクレイパ取得のみ。
   workflow_dispatch:
+    inputs:
+      numbers3:
+        description: 'ナンバーズ3 当選番号 3桁（例 388 / 先頭ゼロ可 019）。空欄=取得のみ'
+        required: false
+        default: ''
+      numbers4:
+        description: 'ナンバーズ4 当選番号 4桁（例 0149）。空欄=取得のみ'
+        required: false
+        default: ''
+      draw_date:
+        description: '抽選日 YYYY-MM-DD（空欄=今日(JST)）'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -35,6 +50,22 @@ jobs:
         env:
           GAME: ${{ matrix.game }}
         run: python scripts/fetch_numbers.py --game "$GAME"
+
+      # 手入力は取得の後。回号は公式データの続きから採番され、既に取得済みなら空振りする。
+      - name: Add manually entered draw
+        env:
+          GAME: ${{ matrix.game }}
+          N3: ${{ inputs.numbers3 }}
+          N4: ${{ inputs.numbers4 }}
+          DRAW_DATE: ${{ inputs.draw_date }}
+        run: |
+          if [ "$GAME" = "numbers3" ]; then DIGITS="$N3"; else DIGITS="$N4"; fi
+          if [ -z "$DIGITS" ]; then
+            echo "手入力なし ($GAME)"
+            exit 0
+          fi
+          python scripts/add_draw.py --game "$GAME" --digits "$DIGITS" --if-missing \
+            ${DRAW_DATE:+--date "$DRAW_DATE"}
 
       - name: Run analysis
         env:
