@@ -47,10 +47,26 @@ jobs:
         working-directory: scripts
         run: python _diag_determinism.py fingerprint
 
+      - name: RF→LSTM 順序を再現して別プロセス2回（現状）
+        working-directory: scripts
+        run: |
+          python _diag_determinism.py rfthen | tee /tmp/p1.txt
+          python _diag_determinism.py rfthen | tee /tmp/p2.txt
+          cmp -s /tmp/p1.txt /tmp/p2.txt && echo "RF→LSTM 現状: 一致" || echo "RF→LSTM 現状: 不一致"
+
+      - name: RF→LSTM 順序で OMP/MKL を1に固定して別プロセス2回
+        working-directory: scripts
+        env:
+          OMP_NUM_THREADS: '1'
+          MKL_NUM_THREADS: '1'
+        run: |
+          python _diag_determinism.py rfthen | tee /tmp/q1.txt
+          python _diag_determinism.py rfthen | tee /tmp/q2.txt
+          cmp -s /tmp/q1.txt /tmp/q2.txt && echo "RF→LSTM OMP固定: 一致" || echo "RF→LSTM OMP固定: 不一致"
+
       - name: 参考 — 別プロセス実行同士の突き合わせ
         run: |
           cmp -s /tmp/a.json /tmp/c.json \
             && echo "現状設定 と OMP固定 の結果は同一" \
             || echo "現状設定 と OMP固定 で結果が異なる"
-# probe B
 # probe C

@@ -66,6 +66,24 @@ def cmd_once():
     print(json.dumps(predict_lstm(_draws(), 3), sort_keys=True))
 
 
+def cmd_rfthen():
+    """本番と同じ順序（RF→LSTM を同一プロセスで複数期間）を再現して指紋を出す。
+
+    孤立したLSTMは安定していたので、先に走る sklearn(n_jobs=-1) が
+    スレッドプールの状態を変えている疑いを検証する。
+    """
+    import hashlib
+    from numbers_ai import predict_rf, predict_lstm
+    all_draws = load_data(GAMES[GAME])
+    parts = []
+    for size in (600, 800, 1000):
+        sub = all_draws[-size:]
+        predict_rf(sub, 3)                      # 本番と同じく先にRF
+        parts.append(json.dumps(predict_lstm(sub, 3), sort_keys=True))
+    blob = "|".join(parts)
+    print(f"RFTHEN sha256={hashlib.sha256(blob.encode()).hexdigest()[:16]}")
+
+
 def cmd_fingerprint():
     """CPUとLSTM出力のハッシュを出す。実行(マシン)をまたいで突き合わせる用。"""
     import hashlib
@@ -85,4 +103,4 @@ def cmd_fingerprint():
 
 if __name__ == "__main__":
     {"env": cmd_env, "inproc": cmd_inproc, "once": cmd_once,
-     "fingerprint": cmd_fingerprint}[sys.argv[1]]()
+     "fingerprint": cmd_fingerprint, "rfthen": cmd_rfthen}[sys.argv[1]]()
