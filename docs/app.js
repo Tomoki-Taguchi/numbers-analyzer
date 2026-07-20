@@ -139,7 +139,10 @@ function predCardHtml(src, mk, p) {
   return `<div class="pred-card">
     <div class="pred-head">
       <span class="pred-mode">${p.mode_name} ${weakNote}</span>
-      <span class="pred-conf">${conf.join(" ／ ")}${tsum}</span>
+      <span class="pred-head-r">
+        <span class="pred-conf">${conf.join(" ／ ")}${tsum}</span>
+        <button class="copy-btn" onclick="copyModeReasons('${src}','${mk}',this)" title="この予想と選出根拠をコピー">📋 コピー</button>
+      </span>
     </div>
     <div class="cand-grid">${cardHtml}</div>
     <div class="cand-reasons" id="reasons-${src}-${mk}"></div>
@@ -227,6 +230,75 @@ function toggleAllReasons() {
 function reasonsToggleBtn() {
   const label = state.allReasons ? "🔽 選出根拠をたたむ" : "📖 全候補の選出根拠を表示";
   return `<button class="reasons-toggle ${state.allReasons ? "on" : ""}" onclick="toggleAllReasons()">${label}</button>`;
+}
+
+// ---- コピー ----
+// そのモードの全候補（番号＋各位の選出根拠）を整形テキストにする
+function buildModeCopyText(src, mk) {
+  const pred = _predBySource(src, mk);
+  if (!pred) return "";
+  const round = state.data.latest_round + 1;
+  const table = pred.digit_reasons || [];
+  const lines = [`【第${round}回】${pred.mode_name}`];
+  (pred.candidates || []).forEach((cand, i) => {
+    const pull = cand.pull_count > 0 ? ` ⚡引${cand.pull_count}` : "";
+    lines.push(`${i + 1}位 ${cand.number_str} 計${cand.sum}/${cand.shape}${pull}`);
+    (cand.digits || []).forEach((d, p) => {
+      const entry = (table[p] && table[p].digits[String(d)]) || {};
+      const tag = REASON_FACTOR[entry.top_factor] || "";
+      const label = (table[p] && table[p].label) || "";
+      lines.push(` ${label}｜${tag}: ${entry.text || ""}`);
+    });
+  });
+  return lines.join("\n");
+}
+
+// クリップボードにコピー（secure context優先、失敗時はtextareaでフォールバック）
+async function copyModeReasons(src, mk, btn) {
+  const text = buildModeCopyText(src, mk);
+  let ok = false;
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      ok = true;
+    } else {
+      ok = fallbackCopy(text);
+    }
+  } catch (e) {
+    ok = fallbackCopy(text);
+  }
+  flashCopyBtn(btn, ok ? "✅ コピーしました" : "⚠️ コピー失敗");
+}
+
+function fallbackCopy(text) {
+  try {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.top = "-9999px";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    return ok;
+  } catch (e) {
+    return false;
+  }
+}
+
+// ボタン文言を一時的に切り替えてフィードバック
+function flashCopyBtn(btn, msg) {
+  if (!btn) return;
+  const orig = btn.dataset.orig || btn.textContent;
+  btn.dataset.orig = orig;
+  btn.textContent = msg;
+  btn.classList.add("copied");
+  setTimeout(() => {
+    btn.textContent = btn.dataset.orig || "📋 コピー";
+    btn.classList.remove("copied");
+  }, 1500);
 }
 
 // ---- 各位頻度 ----

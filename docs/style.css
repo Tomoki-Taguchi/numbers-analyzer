@@ -79,8 +79,12 @@ main { max-width: 960px; margin: 0 auto; padding: 1.3rem 1rem; }
 /* Prediction cards */
 .pred-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem; margin-bottom: 1rem; }
 .pred-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+.pred-head-r { display: flex; align-items: center; justify-content: flex-end; gap: 0.6rem; flex-wrap: wrap; }
 .pred-mode { font-weight: 700; color: var(--gold); font-size: 0.98rem; }
 .pred-conf { font-size: 0.78rem; color: var(--text-muted); }
+.copy-btn { background: var(--bg-primary); color: var(--gold-dim); border: 1px solid var(--border); border-radius: 999px; padding: 0.28rem 0.8rem; font-size: 0.74rem; font-weight: 700; cursor: pointer; white-space: nowrap; transition: all 0.15s; }
+.copy-btn:hover { border-color: var(--gold); color: var(--gold); }
+.copy-btn.copied { background: var(--cold); color: #fff; border-color: var(--cold); }
 .pred-metrics { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.5rem; text-align: center; }
 .pos-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.6rem; margin-top: 0.8rem; }
 .pos-cell { border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem; text-align: center; }
