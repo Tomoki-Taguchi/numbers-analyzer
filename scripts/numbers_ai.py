@@ -4,9 +4,13 @@
 - RandomForest: 位置pごとの10クラス多クラス分類 → 0-9の確率
 - LSTM: 位置pごとの one-hot 系列分類 → 0-9の確率
 
-いずれも決定的。RF は random_state=42、LSTM は torch.manual_seed(42) に加えて
-torch.set_num_threads(1) でスレッド由来の加算順序のぶれを止めている
-（seed 固定だけでは確率が1e-6ぶれ、僅差の予想が実行ごとに入れ替わった）。
+RF は決定的（random_state=42。実測で複数回の実行が完全一致）。
+LSTM は seed を固定しても**実行をまたぐと再現しない**（2026-07-20実測）。
+孤立して呼ぶ限りは別マシンでも一致するが、本番パイプライン内では確率が
+1e-4程度ぶれ、僅差の予想が入れ替わる。原因は未特定。スレッド数・CPU差・
+RFとの実行順序・ライブラリ版・入力データはいずれも否定済み。
+このため「同じ回号なら予想が変わらない」保証は再現性ではなく、
+analyze_numbers.py の「データが変わらなければ再計算しない」で担保している。
 モデル数はD(3〜4)本×2なので、ロト6(43本×2)より計算は軽い。
 """
 
@@ -98,11 +102,6 @@ def predict_lstm(draws, D, seq_len=LSTM_SEQ_LEN, epochs=LSTM_EPOCHS):
     import torch
     import torch.nn as nn
 
-    # マルチスレッドだと加算の順序が実行ごとに変わり、確率が1e-6程度ぶれる。
-    # そのぶれで僅差の候補が入れ替わり、同じ回号なのに予想が変わることがあるため
-    # シングルスレッドに固定して加算順序を決定的にする。
-    torch.set_num_threads(1)
-
     class NumbersLSTM(nn.Module):
         def __init__(self, input_size=10, hidden_size=32, num_layers=1):
             super().__init__()
@@ -149,7 +148,5 @@ def predict_lstm(draws, D, seq_len=LSTM_SEQ_LEN, epochs=LSTM_EPOCHS):
         with torch.no_grad():
             last = torch.tensor([[onehot(v) for v in seq[-seq_len:]]], dtype=torch.float32)
             probs = torch.softmax(model(last)[0], dim=0).tolist()
-        # 4桁丸め: set_num_threads(1) で消しきれない残留ノイズへの余裕。
-        # 表示は「16.92%」等なので4桁で精度は足りる。
-        result[str(p)] = {str(d): round(float(probs[d]), 4) for d in range(10)}
+        result[str(p)] = {str(d): round(float(probs[d]), 6) for d in range(10)}
     return {"per_position": result}
