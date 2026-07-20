@@ -80,3 +80,5 @@ PY
           cmp -s /tmp/o1.json /tmp/o2.json \
             && echo "OMP固定での再実行: 一致" \
             || echo "OMP固定での再実行: 不一致"
+
+# (re-index)
