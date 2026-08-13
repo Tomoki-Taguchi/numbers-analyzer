@@ -1,8 +1,8 @@
 {
-  "last_updated": "2026-08-12T01:12:30.740558",
+  "last_updated": "2026-08-13T01:14:47.159985",
   "game": "numbers3",
   "digits": 3,
-  "total_draws": 7046,
+  "total_draws": 7047,
   "draws": [
     {
       "round": 1,
@@ -63416,6 +63416,15 @@
         5,
         0,
         7
+      ]
+    },
+    {
+      "round": 7047,
+      "date": "2026-08-12",
+      "digits": [
+        3,
+        8,
+        0
       ]
     }
   ]
