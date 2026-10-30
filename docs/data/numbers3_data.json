@@ -1,8 +1,8 @@
 {
-  "last_updated": "2026-10-29T03:41:29.908072",
+  "last_updated": "2026-10-30T03:44:11.374613",
   "game": "numbers3",
   "digits": 3,
-  "total_draws": 7102,
+  "total_draws": 7103,
   "draws": [
     {
       "round": 1,
@@ -63920,6 +63920,15 @@
         9,
         5,
         2
+      ]
+    },
+    {
+      "round": 7103,
+      "date": "2026-10-29",
+      "digits": [
+        6,
+        1,
+        7
       ]
     }
   ]
