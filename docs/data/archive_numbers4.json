@@ -138648,6 +138648,1761 @@
     "predicted_round": 7109,
     "data_up_to_round": 7108,
     "generated_at": "2026-11-06",
+    "actual": {
+      "digits": [
+        2,
+        4,
+        1,
+        9
+      ],
+      "date": "2026-11-06"
+    },
+    "verified": true,
+    "predictions_by_period": {
+      "all": {
+        "modes": {
+          "balanced": {
+            "mode_name": "総合予想",
+            "digits": [
+              8,
+              5,
+              9,
+              9
+            ],
+            "number_str": "8599",
+            "metrics": {
+              "sum": 31,
+              "odd_even": "3:1",
+              "big_small": "4:0",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 1
+          },
+          "frequency_heavy": {
+            "mode_name": "出現頻度重視",
+            "digits": [
+              6,
+              5,
+              9,
+              9
+            ],
+            "number_str": "6599",
+            "metrics": {
+              "sum": 29,
+              "odd_even": "3:1",
+              "big_small": "4:0",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 1
+          },
+          "recent_heavy": {
+            "mode_name": "直近トレンド重視",
+            "digits": [
+              8,
+              5,
+              0,
+              4
+            ],
+            "number_str": "8504",
+            "metrics": {
+              "sum": 17,
+              "odd_even": "1:3",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "pull_heavy": {
+            "mode_name": "引っ張り重視",
+            "digits": [
+              5,
+              5,
+              6,
+              4
+            ],
+            "number_str": "5564",
+            "metrics": {
+              "sum": 20,
+              "odd_even": "2:2",
+              "big_small": "3:1",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "cycle_heavy": {
+            "mode_name": "周期重視",
+            "digits": [
+              4,
+              5,
+              3,
+              9
+            ],
+            "number_str": "4539",
+            "metrics": {
+              "sum": 21,
+              "odd_even": "3:1",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 1
+          },
+          "ml_heavy": {
+            "mode_name": "AI(RF+LSTM)重視",
+            "digits": [
+              5,
+              1,
+              9,
+              1
+            ],
+            "number_str": "5191",
+            "metrics": {
+              "sum": 16,
+              "odd_even": "4:0",
+              "big_small": "2:2",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "sum_target": {
+            "mode_name": "合計値ターゲット予想",
+            "digits": [
+              0,
+              5,
+              9,
+              1
+            ],
+            "number_str": "0591",
+            "metrics": {
+              "sum": 15,
+              "odd_even": "3:1",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": "15-17"
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          }
+        }
+      },
+      "100": {
+        "modes": {
+          "balanced": {
+            "mode_name": "総合予想",
+            "digits": [
+              1,
+              5,
+              0,
+              4
+            ],
+            "number_str": "1504",
+            "metrics": {
+              "sum": 10,
+              "odd_even": "2:2",
+              "big_small": "1:3",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "frequency_heavy": {
+            "mode_name": "出現頻度重視",
+            "digits": [
+              8,
+              5,
+              0,
+              4
+            ],
+            "number_str": "8504",
+            "metrics": {
+              "sum": 17,
+              "odd_even": "1:3",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "recent_heavy": {
+            "mode_name": "直近トレンド重視",
+            "digits": [
+              8,
+              5,
+              0,
+              4
+            ],
+            "number_str": "8504",
+            "metrics": {
+              "sum": 17,
+              "odd_even": "1:3",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "pull_heavy": {
+            "mode_name": "引っ張り重視",
+            "digits": [
+              1,
+              5,
+              6,
+              4
+            ],
+            "number_str": "1564",
+            "metrics": {
+              "sum": 16,
+              "odd_even": "2:2",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "cycle_heavy": {
+            "mode_name": "周期重視",
+            "digits": [
+              1,
+              9,
+              8,
+              0
+            ],
+            "number_str": "1980",
+            "metrics": {
+              "sum": 18,
+              "odd_even": "2:2",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "ml_heavy": {
+            "mode_name": "AI(RF+LSTM)重視",
+            "digits": [
+              1,
+              5,
+              4,
+              4
+            ],
+            "number_str": "1544",
+            "metrics": {
+              "sum": 14,
+              "odd_even": "2:2",
+              "big_small": "1:3",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "sum_target": {
+            "mode_name": "合計値ターゲット予想",
+            "digits": [
+              1,
+              5,
+              9,
+              4
+            ],
+            "number_str": "1594",
+            "metrics": {
+              "sum": 19,
+              "odd_even": "3:1",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": "18-20"
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          }
+        }
+      },
+      "200": {
+        "modes": {
+          "balanced": {
+            "mode_name": "総合予想",
+            "digits": [
+              9,
+              5,
+              9,
+              4
+            ],
+            "number_str": "9594",
+            "metrics": {
+              "sum": 27,
+              "odd_even": "3:1",
+              "big_small": "3:1",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "frequency_heavy": {
+            "mode_name": "出現頻度重視",
+            "digits": [
+              9,
+              5,
+              9,
+              4
+            ],
+            "number_str": "9594",
+            "metrics": {
+              "sum": 27,
+              "odd_even": "3:1",
+              "big_small": "3:1",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "recent_heavy": {
+            "mode_name": "直近トレンド重視",
+            "digits": [
+              8,
+              5,
+              0,
+              4
+            ],
+            "number_str": "8504",
+            "metrics": {
+              "sum": 17,
+              "odd_even": "1:3",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "pull_heavy": {
+            "mode_name": "引っ張り重視",
+            "digits": [
+              1,
+              5,
+              6,
+              4
+            ],
+            "number_str": "1564",
+            "metrics": {
+              "sum": 16,
+              "odd_even": "2:2",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "cycle_heavy": {
+            "mode_name": "周期重視",
+            "digits": [
+              1,
+              6,
+              8,
+              0
+            ],
+            "number_str": "1680",
+            "metrics": {
+              "sum": 15,
+              "odd_even": "1:3",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "ml_heavy": {
+            "mode_name": "AI(RF+LSTM)重視",
+            "digits": [
+              1,
+              5,
+              6,
+              4
+            ],
+            "number_str": "1564",
+            "metrics": {
+              "sum": 16,
+              "odd_even": "2:2",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "sum_target": {
+            "mode_name": "合計値ターゲット予想",
+            "digits": [
+              1,
+              3,
+              0,
+              0
+            ],
+            "number_str": "1300",
+            "metrics": {
+              "sum": 4,
+              "odd_even": "2:2",
+              "big_small": "0:4",
+              "shape": "ダブル(重複あり)",
+              "target_sum": "3-5"
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          }
+        }
+      },
+      "300": {
+        "modes": {
+          "balanced": {
+            "mode_name": "総合予想",
+            "digits": [
+              5,
+              5,
+              9,
+              4
+            ],
+            "number_str": "5594",
+            "metrics": {
+              "sum": 23,
+              "odd_even": "3:1",
+              "big_small": "3:1",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "frequency_heavy": {
+            "mode_name": "出現頻度重視",
+            "digits": [
+              9,
+              5,
+              9,
+              4
+            ],
+            "number_str": "9594",
+            "metrics": {
+              "sum": 27,
+              "odd_even": "3:1",
+              "big_small": "3:1",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "recent_heavy": {
+            "mode_name": "直近トレンド重視",
+            "digits": [
+              8,
+              5,
+              0,
+              4
+            ],
+            "number_str": "8504",
+            "metrics": {
+              "sum": 17,
+              "odd_even": "1:3",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "pull_heavy": {
+            "mode_name": "引っ張り重視",
+            "digits": [
+              5,
+              5,
+              6,
+              4
+            ],
+            "number_str": "5564",
+            "metrics": {
+              "sum": 20,
+              "odd_even": "2:2",
+              "big_small": "3:1",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "cycle_heavy": {
+            "mode_name": "周期重視",
+            "digits": [
+              9,
+              2,
+              6,
+              7
+            ],
+            "number_str": "9267",
+            "metrics": {
+              "sum": 24,
+              "odd_even": "2:2",
+              "big_small": "3:1",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "ml_heavy": {
+            "mode_name": "AI(RF+LSTM)重視",
+            "digits": [
+              4,
+              5,
+              9,
+              7
+            ],
+            "number_str": "4597",
+            "metrics": {
+              "sum": 25,
+              "odd_even": "3:1",
+              "big_small": "3:1",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "sum_target": {
+            "mode_name": "合計値ターゲット予想",
+            "digits": [
+              5,
+              2,
+              0,
+              0
+            ],
+            "number_str": "5200",
+            "metrics": {
+              "sum": 7,
+              "odd_even": "1:3",
+              "big_small": "1:3",
+              "shape": "ダブル(重複あり)",
+              "target_sum": "6-8"
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          }
+        }
+      },
+      "400": {
+        "modes": {
+          "balanced": {
+            "mode_name": "総合予想",
+            "digits": [
+              2,
+              5,
+              9,
+              4
+            ],
+            "number_str": "2594",
+            "metrics": {
+              "sum": 20,
+              "odd_even": "2:2",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 1
+          },
+          "frequency_heavy": {
+            "mode_name": "出現頻度重視",
+            "digits": [
+              2,
+              5,
+              9,
+              4
+            ],
+            "number_str": "2594",
+            "metrics": {
+              "sum": 20,
+              "odd_even": "2:2",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 1
+          },
+          "recent_heavy": {
+            "mode_name": "直近トレンド重視",
+            "digits": [
+              8,
+              5,
+              0,
+              4
+            ],
+            "number_str": "8504",
+            "metrics": {
+              "sum": 17,
+              "odd_even": "1:3",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "pull_heavy": {
+            "mode_name": "引っ張り重視",
+            "digits": [
+              5,
+              5,
+              4,
+              4
+            ],
+            "number_str": "5544",
+            "metrics": {
+              "sum": 18,
+              "odd_even": "2:2",
+              "big_small": "2:2",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "cycle_heavy": {
+            "mode_name": "周期重視",
+            "digits": [
+              2,
+              6,
+              5,
+              8
+            ],
+            "number_str": "2658",
+            "metrics": {
+              "sum": 21,
+              "odd_even": "1:3",
+              "big_small": "3:1",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 1
+          },
+          "ml_heavy": {
+            "mode_name": "AI(RF+LSTM)重視",
+            "digits": [
+              2,
+              5,
+              4,
+              4
+            ],
+            "number_str": "2544",
+            "metrics": {
+              "sum": 15,
+              "odd_even": "1:3",
+              "big_small": "1:3",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 1
+          },
+          "sum_target": {
+            "mode_name": "合計値ターゲット予想",
+            "digits": [
+              2,
+              5,
+              0,
+              4
+            ],
+            "number_str": "2504",
+            "metrics": {
+              "sum": 11,
+              "odd_even": "1:3",
+              "big_small": "1:3",
+              "shape": "バラ",
+              "target_sum": "9-11"
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 1
+          }
+        }
+      },
+      "500": {
+        "modes": {
+          "balanced": {
+            "mode_name": "総合予想",
+            "digits": [
+              0,
+              5,
+              9,
+              4
+            ],
+            "number_str": "0594",
+            "metrics": {
+              "sum": 18,
+              "odd_even": "2:2",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "frequency_heavy": {
+            "mode_name": "出現頻度重視",
+            "digits": [
+              9,
+              5,
+              9,
+              4
+            ],
+            "number_str": "9594",
+            "metrics": {
+              "sum": 27,
+              "odd_even": "3:1",
+              "big_small": "3:1",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "recent_heavy": {
+            "mode_name": "直近トレンド重視",
+            "digits": [
+              8,
+              5,
+              0,
+              4
+            ],
+            "number_str": "8504",
+            "metrics": {
+              "sum": 17,
+              "odd_even": "1:3",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "pull_heavy": {
+            "mode_name": "引っ張り重視",
+            "digits": [
+              0,
+              5,
+              4,
+              4
+            ],
+            "number_str": "0544",
+            "metrics": {
+              "sum": 13,
+              "odd_even": "1:3",
+              "big_small": "1:3",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "cycle_heavy": {
+            "mode_name": "周期重視",
+            "digits": [
+              2,
+              6,
+              5,
+              8
+            ],
+            "number_str": "2658",
+            "metrics": {
+              "sum": 21,
+              "odd_even": "1:3",
+              "big_small": "3:1",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 1
+          },
+          "ml_heavy": {
+            "mode_name": "AI(RF+LSTM)重視",
+            "digits": [
+              8,
+              5,
+              9,
+              4
+            ],
+            "number_str": "8594",
+            "metrics": {
+              "sum": 26,
+              "odd_even": "2:2",
+              "big_small": "3:1",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "sum_target": {
+            "mode_name": "合計値ターゲット予想",
+            "digits": [
+              0,
+              5,
+              0,
+              4
+            ],
+            "number_str": "0504",
+            "metrics": {
+              "sum": 9,
+              "odd_even": "1:3",
+              "big_small": "1:3",
+              "shape": "ダブル(重複あり)",
+              "target_sum": "9-11"
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          }
+        }
+      },
+      "600": {
+        "modes": {
+          "balanced": {
+            "mode_name": "総合予想",
+            "digits": [
+              0,
+              5,
+              0,
+              4
+            ],
+            "number_str": "0504",
+            "metrics": {
+              "sum": 9,
+              "odd_even": "1:3",
+              "big_small": "1:3",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "frequency_heavy": {
+            "mode_name": "出現頻度重視",
+            "digits": [
+              2,
+              2,
+              9,
+              4
+            ],
+            "number_str": "2294",
+            "metrics": {
+              "sum": 17,
+              "odd_even": "1:3",
+              "big_small": "1:3",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 1
+          },
+          "recent_heavy": {
+            "mode_name": "直近トレンド重視",
+            "digits": [
+              0,
+              5,
+              0,
+              4
+            ],
+            "number_str": "0504",
+            "metrics": {
+              "sum": 9,
+              "odd_even": "1:3",
+              "big_small": "1:3",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "pull_heavy": {
+            "mode_name": "引っ張り重視",
+            "digits": [
+              0,
+              6,
+              6,
+              4
+            ],
+            "number_str": "0664",
+            "metrics": {
+              "sum": 16,
+              "odd_even": "0:4",
+              "big_small": "2:2",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "cycle_heavy": {
+            "mode_name": "周期重視",
+            "digits": [
+              0,
+              2,
+              9,
+              0
+            ],
+            "number_str": "0290",
+            "metrics": {
+              "sum": 11,
+              "odd_even": "1:3",
+              "big_small": "1:3",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "ml_heavy": {
+            "mode_name": "AI(RF+LSTM)重視",
+            "digits": [
+              0,
+              5,
+              0,
+              4
+            ],
+            "number_str": "0504",
+            "metrics": {
+              "sum": 9,
+              "odd_even": "1:3",
+              "big_small": "1:3",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "sum_target": {
+            "mode_name": "合計値ターゲット予想",
+            "digits": [
+              0,
+              5,
+              9,
+              9
+            ],
+            "number_str": "0599",
+            "metrics": {
+              "sum": 23,
+              "odd_even": "3:1",
+              "big_small": "3:1",
+              "shape": "ダブル(重複あり)",
+              "target_sum": "21-23"
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 1
+          }
+        }
+      },
+      "700": {
+        "modes": {
+          "balanced": {
+            "mode_name": "総合予想",
+            "digits": [
+              0,
+              5,
+              9,
+              4
+            ],
+            "number_str": "0594",
+            "metrics": {
+              "sum": 18,
+              "odd_even": "2:2",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "frequency_heavy": {
+            "mode_name": "出現頻度重視",
+            "digits": [
+              2,
+              5,
+              9,
+              0
+            ],
+            "number_str": "2590",
+            "metrics": {
+              "sum": 16,
+              "odd_even": "2:2",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 1
+          },
+          "recent_heavy": {
+            "mode_name": "直近トレンド重視",
+            "digits": [
+              8,
+              5,
+              0,
+              4
+            ],
+            "number_str": "8504",
+            "metrics": {
+              "sum": 17,
+              "odd_even": "1:3",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "pull_heavy": {
+            "mode_name": "引っ張り重視",
+            "digits": [
+              5,
+              6,
+              6,
+              4
+            ],
+            "number_str": "5664",
+            "metrics": {
+              "sum": 21,
+              "odd_even": "1:3",
+              "big_small": "3:1",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "cycle_heavy": {
+            "mode_name": "周期重視",
+            "digits": [
+              3,
+              6,
+              5,
+              8
+            ],
+            "number_str": "3658",
+            "metrics": {
+              "sum": 22,
+              "odd_even": "2:2",
+              "big_small": "3:1",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "ml_heavy": {
+            "mode_name": "AI(RF+LSTM)重視",
+            "digits": [
+              8,
+              6,
+              6,
+              4
+            ],
+            "number_str": "8664",
+            "metrics": {
+              "sum": 24,
+              "odd_even": "0:4",
+              "big_small": "3:1",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "sum_target": {
+            "mode_name": "合計値ターゲット予想",
+            "digits": [
+              2,
+              5,
+              9,
+              0
+            ],
+            "number_str": "2590",
+            "metrics": {
+              "sum": 16,
+              "odd_even": "2:2",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": "15-17"
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 1
+          }
+        }
+      },
+      "800": {
+        "modes": {
+          "balanced": {
+            "mode_name": "総合予想",
+            "digits": [
+              0,
+              5,
+              0,
+              4
+            ],
+            "number_str": "0504",
+            "metrics": {
+              "sum": 9,
+              "odd_even": "1:3",
+              "big_small": "1:3",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "frequency_heavy": {
+            "mode_name": "出現頻度重視",
+            "digits": [
+              2,
+              3,
+              9,
+              4
+            ],
+            "number_str": "2394",
+            "metrics": {
+              "sum": 18,
+              "odd_even": "2:2",
+              "big_small": "1:3",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 1
+          },
+          "recent_heavy": {
+            "mode_name": "直近トレンド重視",
+            "digits": [
+              0,
+              5,
+              0,
+              4
+            ],
+            "number_str": "0504",
+            "metrics": {
+              "sum": 9,
+              "odd_even": "1:3",
+              "big_small": "1:3",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "pull_heavy": {
+            "mode_name": "引っ張り重視",
+            "digits": [
+              0,
+              6,
+              6,
+              4
+            ],
+            "number_str": "0664",
+            "metrics": {
+              "sum": 16,
+              "odd_even": "0:4",
+              "big_small": "2:2",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "cycle_heavy": {
+            "mode_name": "周期重視",
+            "digits": [
+              9,
+              6,
+              6,
+              4
+            ],
+            "number_str": "9664",
+            "metrics": {
+              "sum": 25,
+              "odd_even": "1:3",
+              "big_small": "3:1",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "ml_heavy": {
+            "mode_name": "AI(RF+LSTM)重視",
+            "digits": [
+              0,
+              6,
+              0,
+              5
+            ],
+            "number_str": "0605",
+            "metrics": {
+              "sum": 11,
+              "odd_even": "1:3",
+              "big_small": "2:2",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "sum_target": {
+            "mode_name": "合計値ターゲット予想",
+            "digits": [
+              2,
+              6,
+              0,
+              4
+            ],
+            "number_str": "2604",
+            "metrics": {
+              "sum": 12,
+              "odd_even": "0:4",
+              "big_small": "1:3",
+              "shape": "バラ",
+              "target_sum": "12-14"
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 1
+          }
+        }
+      },
+      "900": {
+        "modes": {
+          "balanced": {
+            "mode_name": "総合予想",
+            "digits": [
+              9,
+              3,
+              9,
+              4
+            ],
+            "number_str": "9394",
+            "metrics": {
+              "sum": 25,
+              "odd_even": "3:1",
+              "big_small": "2:2",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "frequency_heavy": {
+            "mode_name": "出現頻度重視",
+            "digits": [
+              2,
+              3,
+              9,
+              4
+            ],
+            "number_str": "2394",
+            "metrics": {
+              "sum": 18,
+              "odd_even": "2:2",
+              "big_small": "1:3",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 1
+          },
+          "recent_heavy": {
+            "mode_name": "直近トレンド重視",
+            "digits": [
+              8,
+              5,
+              0,
+              4
+            ],
+            "number_str": "8504",
+            "metrics": {
+              "sum": 17,
+              "odd_even": "1:3",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "pull_heavy": {
+            "mode_name": "引っ張り重視",
+            "digits": [
+              5,
+              6,
+              6,
+              4
+            ],
+            "number_str": "5664",
+            "metrics": {
+              "sum": 21,
+              "odd_even": "1:3",
+              "big_small": "3:1",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "cycle_heavy": {
+            "mode_name": "周期重視",
+            "digits": [
+              9,
+              6,
+              6,
+              8
+            ],
+            "number_str": "9668",
+            "metrics": {
+              "sum": 29,
+              "odd_even": "1:3",
+              "big_small": "4:0",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "ml_heavy": {
+            "mode_name": "AI(RF+LSTM)重視",
+            "digits": [
+              9,
+              3,
+              6,
+              3
+            ],
+            "number_str": "9363",
+            "metrics": {
+              "sum": 21,
+              "odd_even": "3:1",
+              "big_small": "2:2",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "sum_target": {
+            "mode_name": "合計値ターゲット予想",
+            "digits": [
+              0,
+              3,
+              6,
+              4
+            ],
+            "number_str": "0364",
+            "metrics": {
+              "sum": 13,
+              "odd_even": "1:3",
+              "big_small": "1:3",
+              "shape": "バラ",
+              "target_sum": "12-14"
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          }
+        }
+      },
+      "1000": {
+        "modes": {
+          "balanced": {
+            "mode_name": "総合予想",
+            "digits": [
+              2,
+              7,
+              9,
+              4
+            ],
+            "number_str": "2794",
+            "metrics": {
+              "sum": 22,
+              "odd_even": "2:2",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 1
+          },
+          "frequency_heavy": {
+            "mode_name": "出現頻度重視",
+            "digits": [
+              2,
+              3,
+              9,
+              4
+            ],
+            "number_str": "2394",
+            "metrics": {
+              "sum": 18,
+              "odd_even": "2:2",
+              "big_small": "1:3",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 1
+          },
+          "recent_heavy": {
+            "mode_name": "直近トレンド重視",
+            "digits": [
+              8,
+              5,
+              0,
+              4
+            ],
+            "number_str": "8504",
+            "metrics": {
+              "sum": 17,
+              "odd_even": "1:3",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "pull_heavy": {
+            "mode_name": "引っ張り重視",
+            "digits": [
+              5,
+              6,
+              6,
+              4
+            ],
+            "number_str": "5664",
+            "metrics": {
+              "sum": 21,
+              "odd_even": "1:3",
+              "big_small": "3:1",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "cycle_heavy": {
+            "mode_name": "周期重視",
+            "digits": [
+              2,
+              6,
+              6,
+              7
+            ],
+            "number_str": "2667",
+            "metrics": {
+              "sum": 21,
+              "odd_even": "1:3",
+              "big_small": "3:1",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 1
+          },
+          "ml_heavy": {
+            "mode_name": "AI(RF+LSTM)重視",
+            "digits": [
+              7,
+              7,
+              9,
+              4
+            ],
+            "number_str": "7794",
+            "metrics": {
+              "sum": 27,
+              "odd_even": "3:1",
+              "big_small": "3:1",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 0
+          },
+          "sum_target": {
+            "mode_name": "合計値ターゲット予想",
+            "digits": [
+              2,
+              7,
+              0,
+              4
+            ],
+            "number_str": "2704",
+            "metrics": {
+              "sum": 13,
+              "odd_even": "1:3",
+              "big_small": "1:3",
+              "shape": "バラ",
+              "target_sum": "12-14"
+            },
+            "straight_hit": false,
+            "box_hit": false,
+            "mini_hit": null,
+            "set_hit": false,
+            "position_match_count": 1
+          }
+        }
+      }
+    }
+  },
+  {
+    "predicted_round": 7110,
+    "data_up_to_round": 7109,
+    "generated_at": "2026-11-07",
     "actual": null,
     "verified": false,
     "predictions_by_period": {
@@ -138722,17 +140477,17 @@
           "pull_heavy": {
             "mode_name": "引っ張り重視",
             "digits": [
+              2,
               5,
-              5,
-              6,
-              4
+              1,
+              9
             ],
-            "number_str": "5564",
+            "number_str": "2519",
             "metrics": {
-              "sum": 20,
-              "odd_even": "2:2",
-              "big_small": "3:1",
-              "shape": "ダブル(重複あり)",
+              "sum": 17,
+              "odd_even": "3:1",
+              "big_small": "2:2",
+              "shape": "バラ",
               "target_sum": null
             },
             "straight_hit": null,
@@ -138744,16 +140499,16 @@
           "cycle_heavy": {
             "mode_name": "周期重視",
             "digits": [
-              4,
+              8,
               5,
               3,
               9
             ],
-            "number_str": "4539",
+            "number_str": "8539",
             "metrics": {
-              "sum": 21,
+              "sum": 25,
               "odd_even": "3:1",
-              "big_small": "2:2",
+              "big_small": "3:1",
               "shape": "バラ",
               "target_sum": null
             },
@@ -138767,15 +140522,15 @@
             "mode_name": "AI(RF+LSTM)重視",
             "digits": [
               5,
-              1,
+              5,
               9,
-              1
+              9
             ],
-            "number_str": "5191",
+            "number_str": "5599",
             "metrics": {
-              "sum": 16,
+              "sum": 28,
               "odd_even": "4:0",
-              "big_small": "2:2",
+              "big_small": "4:0",
               "shape": "ダブル(重複あり)",
               "target_sum": null
             },
@@ -138788,14 +140543,14 @@
           "sum_target": {
             "mode_name": "合計値ターゲット予想",
             "digits": [
-              0,
               5,
-              9,
-              1
+              3,
+              0,
+              9
             ],
-            "number_str": "0591",
+            "number_str": "5309",
             "metrics": {
-              "sum": 15,
+              "sum": 17,
               "odd_even": "3:1",
               "big_small": "2:2",
               "shape": "バラ",
@@ -138814,17 +140569,17 @@
           "balanced": {
             "mode_name": "総合予想",
             "digits": [
-              1,
+              8,
               5,
               0,
-              4
+              0
             ],
-            "number_str": "1504",
+            "number_str": "8500",
             "metrics": {
-              "sum": 10,
-              "odd_even": "2:2",
-              "big_small": "1:3",
-              "shape": "バラ",
+              "sum": 13,
+              "odd_even": "1:3",
+              "big_small": "2:2",
+              "shape": "ダブル(重複あり)",
               "target_sum": null
             },
             "straight_hit": null,
@@ -138880,15 +140635,15 @@
           "pull_heavy": {
             "mode_name": "引っ張り重視",
             "digits": [
-              1,
-              5,
+              2,
+              4,
               6,
-              4
+              9
             ],
-            "number_str": "1564",
+            "number_str": "2469",
             "metrics": {
-              "sum": 16,
-              "odd_even": "2:2",
+              "sum": 21,
+              "odd_even": "1:3",
               "big_small": "2:2",
               "shape": "バラ",
               "target_sum": null
@@ -138902,15 +140657,15 @@
           "cycle_heavy": {
             "mode_name": "周期重視",
             "digits": [
-              1,
-              9,
-              8,
-              0
+              6,
+              3,
+              0,
+              8
             ],
-            "number_str": "1980",
+            "number_str": "6308",
             "metrics": {
-              "sum": 18,
-              "odd_even": "2:2",
+              "sum": 17,
+              "odd_even": "1:3",
               "big_small": "2:2",
               "shape": "バラ",
               "target_sum": null
@@ -138925,15 +140680,15 @@
             "mode_name": "AI(RF+LSTM)重視",
             "digits": [
               1,
-              5,
               4,
-              4
+              0,
+              0
             ],
-            "number_str": "1544",
+            "number_str": "1400",
             "metrics": {
-              "sum": 14,
-              "odd_even": "2:2",
-              "big_small": "1:3",
+              "sum": 5,
+              "odd_even": "1:3",
+              "big_small": "0:4",
               "shape": "ダブル(重複あり)",
               "target_sum": null
             },
@@ -138946,18 +140701,18 @@
           "sum_target": {
             "mode_name": "合計値ターゲット予想",
             "digits": [
-              1,
+              8,
               5,
-              9,
-              4
+              0,
+              0
             ],
-            "number_str": "1594",
+            "number_str": "8500",
             "metrics": {
-              "sum": 19,
-              "odd_even": "3:1",
+              "sum": 13,
+              "odd_even": "1:3",
               "big_small": "2:2",
-              "shape": "バラ",
-              "target_sum": "18-20"
+              "shape": "ダブル(重複あり)",
+              "target_sum": "12-14"
             },
             "straight_hit": null,
             "box_hit": null,
@@ -138974,15 +140729,15 @@
             "digits": [
               9,
               5,
-              9,
+              0,
               4
             ],
-            "number_str": "9594",
+            "number_str": "9504",
             "metrics": {
-              "sum": 27,
-              "odd_even": "3:1",
-              "big_small": "3:1",
-              "shape": "ダブル(重複あり)",
+              "sum": 18,
+              "odd_even": "2:2",
+              "big_small": "2:2",
+              "shape": "バラ",
               "target_sum": null
             },
             "straight_hit": null,
@@ -138996,15 +140751,15 @@
             "digits": [
               9,
               5,
-              9,
+              0,
               4
             ],
-            "number_str": "9594",
+            "number_str": "9504",
             "metrics": {
-              "sum": 27,
-              "odd_even": "3:1",
-              "big_small": "3:1",
-              "shape": "ダブル(重複あり)",
+              "sum": 18,
+              "odd_even": "2:2",
+              "big_small": "2:2",
+              "shape": "バラ",
               "target_sum": null
             },
             "straight_hit": null,
@@ -139038,16 +140793,16 @@
           "pull_heavy": {
             "mode_name": "引っ張り重視",
             "digits": [
+              2,
+              4,
               1,
-              5,
-              6,
-              4
+              9
             ],
-            "number_str": "1564",
+            "number_str": "2419",
             "metrics": {
               "sum": 16,
               "odd_even": "2:2",
-              "big_small": "2:2",
+              "big_small": "1:3",
               "shape": "バラ",
               "target_sum": null
             },
@@ -139061,14 +140816,14 @@
             "mode_name": "周期重視",
             "digits": [
               1,
-              6,
-              8,
-              0
+              5,
+              0,
+              8
             ],
-            "number_str": "1680",
+            "number_str": "1508",
             "metrics": {
-              "sum": 15,
-              "odd_even": "1:3",
+              "sum": 14,
+              "odd_even": "2:2",
               "big_small": "2:2",
               "shape": "バラ",
               "target_sum": null
@@ -139082,15 +140837,15 @@
           "ml_heavy": {
             "mode_name": "AI(RF+LSTM)重視",
             "digits": [
-              1,
+              7,
               5,
-              6,
-              4
+              0,
+              1
             ],
-            "number_str": "1564",
+            "number_str": "7501",
             "metrics": {
-              "sum": 16,
-              "odd_even": "2:2",
+              "sum": 13,
+              "odd_even": "3:1",
               "big_small": "2:2",
               "shape": "バラ",
               "target_sum": null
@@ -139104,18 +140859,18 @@
           "sum_target": {
             "mode_name": "合計値ターゲット予想",
             "digits": [
-              1,
-              3,
+              7,
+              5,
               0,
-              0
+              1
             ],
-            "number_str": "1300",
+            "number_str": "7501",
             "metrics": {
-              "sum": 4,
-              "odd_even": "2:2",
-              "big_small": "0:4",
-              "shape": "ダブル(重複あり)",
-              "target_sum": "3-5"
+              "sum": 13,
+              "odd_even": "3:1",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": "12-14"
             },
             "straight_hit": null,
             "box_hit": null,
@@ -139130,17 +140885,17 @@
           "balanced": {
             "mode_name": "総合予想",
             "digits": [
+              2,
               5,
-              5,
-              9,
+              0,
               4
             ],
-            "number_str": "5594",
+            "number_str": "2504",
             "metrics": {
-              "sum": 23,
-              "odd_even": "3:1",
-              "big_small": "3:1",
-              "shape": "ダブル(重複あり)",
+              "sum": 11,
+              "odd_even": "1:3",
+              "big_small": "1:3",
+              "shape": "バラ",
               "target_sum": null
             },
             "straight_hit": null,
@@ -139152,17 +140907,17 @@
           "frequency_heavy": {
             "mode_name": "出現頻度重視",
             "digits": [
-              9,
+              2,
               5,
-              9,
+              0,
               4
             ],
-            "number_str": "9594",
+            "number_str": "2504",
             "metrics": {
-              "sum": 27,
-              "odd_even": "3:1",
-              "big_small": "3:1",
-              "shape": "ダブル(重複あり)",
+              "sum": 11,
+              "odd_even": "1:3",
+              "big_small": "1:3",
+              "shape": "バラ",
               "target_sum": null
             },
             "straight_hit": null,
@@ -139174,16 +140929,16 @@
           "recent_heavy": {
             "mode_name": "直近トレンド重視",
             "digits": [
-              8,
+              2,
               5,
               0,
               4
             ],
-            "number_str": "8504",
+            "number_str": "2504",
             "metrics": {
-              "sum": 17,
+              "sum": 11,
               "odd_even": "1:3",
-              "big_small": "2:2",
+              "big_small": "1:3",
               "shape": "バラ",
               "target_sum": null
             },
@@ -139196,16 +140951,16 @@
           "pull_heavy": {
             "mode_name": "引っ張り重視",
             "digits": [
-              5,
-              5,
-              6,
+              2,
+              4,
+              1,
               4
             ],
-            "number_str": "5564",
+            "number_str": "2414",
             "metrics": {
-              "sum": 20,
-              "odd_even": "2:2",
-              "big_small": "3:1",
+              "sum": 11,
+              "odd_even": "1:3",
+              "big_small": "0:4",
               "shape": "ダブル(重複あり)",
               "target_sum": null
             },
@@ -139218,17 +140973,17 @@
           "cycle_heavy": {
             "mode_name": "周期重視",
             "digits": [
-              9,
               2,
-              6,
-              7
+              2,
+              2,
+              1
             ],
-            "number_str": "9267",
+            "number_str": "2221",
             "metrics": {
-              "sum": 24,
-              "odd_even": "2:2",
-              "big_small": "3:1",
-              "shape": "バラ",
+              "sum": 7,
+              "odd_even": "1:3",
+              "big_small": "0:4",
+              "shape": "ダブル(重複あり)",
               "target_sum": null
             },
             "straight_hit": null,
@@ -139240,16 +140995,16 @@
           "ml_heavy": {
             "mode_name": "AI(RF+LSTM)重視",
             "digits": [
-              4,
+              2,
               5,
-              9,
-              7
+              0,
+              4
             ],
-            "number_str": "4597",
+            "number_str": "2504",
             "metrics": {
-              "sum": 25,
-              "odd_even": "3:1",
-              "big_small": "3:1",
+              "sum": 11,
+              "odd_even": "1:3",
+              "big_small": "1:3",
               "shape": "バラ",
               "target_sum": null
             },
@@ -139262,18 +141017,18 @@
           "sum_target": {
             "mode_name": "合計値ターゲット予想",
             "digits": [
-              5,
+              7,
               2,
-              0,
-              0
+              9,
+              4
             ],
-            "number_str": "5200",
+            "number_str": "7294",
             "metrics": {
-              "sum": 7,
-              "odd_even": "1:3",
-              "big_small": "1:3",
-              "shape": "ダブル(重複あり)",
-              "target_sum": "6-8"
+              "sum": 22,
+              "odd_even": "2:2",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": "21-23"
             },
             "straight_hit": null,
             "box_hit": null,
@@ -139332,16 +141087,16 @@
           "recent_heavy": {
             "mode_name": "直近トレンド重視",
             "digits": [
-              8,
+              2,
               5,
               0,
               4
             ],
-            "number_str": "8504",
+            "number_str": "2504",
             "metrics": {
-              "sum": 17,
+              "sum": 11,
               "odd_even": "1:3",
-              "big_small": "2:2",
+              "big_small": "1:3",
               "shape": "バラ",
               "target_sum": null
             },
@@ -139354,16 +141109,16 @@
           "pull_heavy": {
             "mode_name": "引っ張り重視",
             "digits": [
-              5,
-              5,
+              2,
               4,
+              1,
               4
             ],
-            "number_str": "5544",
+            "number_str": "2414",
             "metrics": {
-              "sum": 18,
-              "odd_even": "2:2",
-              "big_small": "2:2",
+              "sum": 11,
+              "odd_even": "1:3",
+              "big_small": "0:4",
               "shape": "ダブル(重複あり)",
               "target_sum": null
             },
@@ -139377,16 +141132,16 @@
             "mode_name": "周期重視",
             "digits": [
               2,
-              6,
               5,
+              2,
               8
             ],
-            "number_str": "2658",
+            "number_str": "2528",
             "metrics": {
-              "sum": 21,
+              "sum": 17,
               "odd_even": "1:3",
-              "big_small": "3:1",
-              "shape": "バラ",
+              "big_small": "2:2",
+              "shape": "ダブル(重複あり)",
               "target_sum": null
             },
             "straight_hit": null,
@@ -139399,16 +141154,16 @@
             "mode_name": "AI(RF+LSTM)重視",
             "digits": [
               2,
-              5,
-              4,
+              3,
+              9,
               4
             ],
-            "number_str": "2544",
+            "number_str": "2394",
             "metrics": {
-              "sum": 15,
-              "odd_even": "1:3",
+              "sum": 18,
+              "odd_even": "2:2",
               "big_small": "1:3",
-              "shape": "ダブル(重複あり)",
+              "shape": "バラ",
               "target_sum": null
             },
             "straight_hit": null,
@@ -139421,17 +141176,17 @@
             "mode_name": "合計値ターゲット予想",
             "digits": [
               2,
-              5,
-              0,
+              2,
+              9,
               4
             ],
-            "number_str": "2504",
+            "number_str": "2294",
             "metrics": {
-              "sum": 11,
+              "sum": 17,
               "odd_even": "1:3",
               "big_small": "1:3",
-              "shape": "バラ",
-              "target_sum": "9-11"
+              "shape": "ダブル(重複あり)",
+              "target_sum": "15-17"
             },
             "straight_hit": null,
             "box_hit": null,
@@ -139446,17 +141201,17 @@
           "balanced": {
             "mode_name": "総合予想",
             "digits": [
-              0,
-              5,
+              2,
+              4,
               9,
               4
             ],
-            "number_str": "0594",
+            "number_str": "2494",
             "metrics": {
-              "sum": 18,
-              "odd_even": "2:2",
-              "big_small": "2:2",
-              "shape": "バラ",
+              "sum": 19,
+              "odd_even": "1:3",
+              "big_small": "1:3",
+              "shape": "ダブル(重複あり)",
               "target_sum": null
             },
             "straight_hit": null,
@@ -139468,17 +141223,17 @@
           "frequency_heavy": {
             "mode_name": "出現頻度重視",
             "digits": [
-              9,
+              2,
               5,
               9,
               4
             ],
-            "number_str": "9594",
+            "number_str": "2594",
             "metrics": {
-              "sum": 27,
-              "odd_even": "3:1",
-              "big_small": "3:1",
-              "shape": "ダブル(重複あり)",
+              "sum": 20,
+              "odd_even": "2:2",
+              "big_small": "2:2",
+              "shape": "バラ",
               "target_sum": null
             },
             "straight_hit": null,
@@ -139512,17 +141267,17 @@
           "pull_heavy": {
             "mode_name": "引っ張り重視",
             "digits": [
-              0,
-              5,
+              2,
               4,
-              4
+              1,
+              9
             ],
-            "number_str": "0544",
+            "number_str": "2419",
             "metrics": {
-              "sum": 13,
-              "odd_even": "1:3",
+              "sum": 16,
+              "odd_even": "2:2",
               "big_small": "1:3",
-              "shape": "ダブル(重複あり)",
+              "shape": "バラ",
               "target_sum": null
             },
             "straight_hit": null,
@@ -139535,14 +141290,330 @@
             "mode_name": "周期重視",
             "digits": [
               2,
-              6,
-              5,
-              8
+              2,
+              9,
+              1
             ],
-            "number_str": "2658",
+            "number_str": "2291",
+            "metrics": {
+              "sum": 14,
+              "odd_even": "2:2",
+              "big_small": "1:3",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": null,
+            "box_hit": null,
+            "mini_hit": null,
+            "set_hit": null,
+            "position_match_count": null
+          },
+          "ml_heavy": {
+            "mode_name": "AI(RF+LSTM)重視",
+            "digits": [
+              2,
+              4,
+              9,
+              4
+            ],
+            "number_str": "2494",
+            "metrics": {
+              "sum": 19,
+              "odd_even": "1:3",
+              "big_small": "1:3",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": null,
+            "box_hit": null,
+            "mini_hit": null,
+            "set_hit": null,
+            "position_match_count": null
+          },
+          "sum_target": {
+            "mode_name": "合計値ターゲット予想",
+            "digits": [
+              2,
+              4,
+              0,
+              4
+            ],
+            "number_str": "2404",
+            "metrics": {
+              "sum": 10,
+              "odd_even": "0:4",
+              "big_small": "0:4",
+              "shape": "ダブル(重複あり)",
+              "target_sum": "9-11"
+            },
+            "straight_hit": null,
+            "box_hit": null,
+            "mini_hit": null,
+            "set_hit": null,
+            "position_match_count": null
+          }
+        }
+      },
+      "600": {
+        "modes": {
+          "balanced": {
+            "mode_name": "総合予想",
+            "digits": [
+              2,
+              5,
+              0,
+              4
+            ],
+            "number_str": "2504",
+            "metrics": {
+              "sum": 11,
+              "odd_even": "1:3",
+              "big_small": "1:3",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": null,
+            "box_hit": null,
+            "mini_hit": null,
+            "set_hit": null,
+            "position_match_count": null
+          },
+          "frequency_heavy": {
+            "mode_name": "出現頻度重視",
+            "digits": [
+              2,
+              5,
+              9,
+              4
+            ],
+            "number_str": "2594",
+            "metrics": {
+              "sum": 20,
+              "odd_even": "2:2",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": null,
+            "box_hit": null,
+            "mini_hit": null,
+            "set_hit": null,
+            "position_match_count": null
+          },
+          "recent_heavy": {
+            "mode_name": "直近トレンド重視",
+            "digits": [
+              8,
+              5,
+              0,
+              4
+            ],
+            "number_str": "8504",
+            "metrics": {
+              "sum": 17,
+              "odd_even": "1:3",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": null,
+            "box_hit": null,
+            "mini_hit": null,
+            "set_hit": null,
+            "position_match_count": null
+          },
+          "pull_heavy": {
+            "mode_name": "引っ張り重視",
+            "digits": [
+              2,
+              4,
+              1,
+              9
+            ],
+            "number_str": "2419",
+            "metrics": {
+              "sum": 16,
+              "odd_even": "2:2",
+              "big_small": "1:3",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": null,
+            "box_hit": null,
+            "mini_hit": null,
+            "set_hit": null,
+            "position_match_count": null
+          },
+          "cycle_heavy": {
+            "mode_name": "周期重視",
+            "digits": [
+              7,
+              2,
+              9,
+              1
+            ],
+            "number_str": "7291",
+            "metrics": {
+              "sum": 19,
+              "odd_even": "3:1",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": null,
+            "box_hit": null,
+            "mini_hit": null,
+            "set_hit": null,
+            "position_match_count": null
+          },
+          "ml_heavy": {
+            "mode_name": "AI(RF+LSTM)重視",
+            "digits": [
+              7,
+              6,
+              6,
+              9
+            ],
+            "number_str": "7669",
+            "metrics": {
+              "sum": 28,
+              "odd_even": "2:2",
+              "big_small": "4:0",
+              "shape": "ダブル(重複あり)",
+              "target_sum": null
+            },
+            "straight_hit": null,
+            "box_hit": null,
+            "mini_hit": null,
+            "set_hit": null,
+            "position_match_count": null
+          },
+          "sum_target": {
+            "mode_name": "合計値ターゲット予想",
+            "digits": [
+              2,
+              5,
+              9,
+              9
+            ],
+            "number_str": "2599",
+            "metrics": {
+              "sum": 25,
+              "odd_even": "3:1",
+              "big_small": "3:1",
+              "shape": "ダブル(重複あり)",
+              "target_sum": "24-26"
+            },
+            "straight_hit": null,
+            "box_hit": null,
+            "mini_hit": null,
+            "set_hit": null,
+            "position_match_count": null
+          }
+        }
+      },
+      "700": {
+        "modes": {
+          "balanced": {
+            "mode_name": "総合予想",
+            "digits": [
+              2,
+              3,
+              0,
+              4
+            ],
+            "number_str": "2304",
+            "metrics": {
+              "sum": 9,
+              "odd_even": "1:3",
+              "big_small": "0:4",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": null,
+            "box_hit": null,
+            "mini_hit": null,
+            "set_hit": null,
+            "position_match_count": null
+          },
+          "frequency_heavy": {
+            "mode_name": "出現頻度重視",
+            "digits": [
+              2,
+              3,
+              9,
+              4
+            ],
+            "number_str": "2394",
+            "metrics": {
+              "sum": 18,
+              "odd_even": "2:2",
+              "big_small": "1:3",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": null,
+            "box_hit": null,
+            "mini_hit": null,
+            "set_hit": null,
+            "position_match_count": null
+          },
+          "recent_heavy": {
+            "mode_name": "直近トレンド重視",
+            "digits": [
+              8,
+              5,
+              0,
+              4
+            ],
+            "number_str": "8504",
+            "metrics": {
+              "sum": 17,
+              "odd_even": "1:3",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": null,
+            "box_hit": null,
+            "mini_hit": null,
+            "set_hit": null,
+            "position_match_count": null
+          },
+          "pull_heavy": {
+            "mode_name": "引っ張り重視",
+            "digits": [
+              2,
+              4,
+              6,
+              9
+            ],
+            "number_str": "2469",
             "metrics": {
               "sum": 21,
               "odd_even": "1:3",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": null,
+            "box_hit": null,
+            "mini_hit": null,
+            "set_hit": null,
+            "position_match_count": null
+          },
+          "cycle_heavy": {
+            "mode_name": "周期重視",
+            "digits": [
+              7,
+              5,
+              2,
+              8
+            ],
+            "number_str": "7528",
+            "metrics": {
+              "sum": 22,
+              "odd_even": "2:2",
               "big_small": "3:1",
               "shape": "バラ",
               "target_sum": null
@@ -139555,6 +141626,54 @@
           },
           "ml_heavy": {
             "mode_name": "AI(RF+LSTM)重視",
+            "digits": [
+              7,
+              6,
+              0,
+              4
+            ],
+            "number_str": "7604",
+            "metrics": {
+              "sum": 17,
+              "odd_even": "1:3",
+              "big_small": "2:2",
+              "shape": "バラ",
+              "target_sum": null
+            },
+            "straight_hit": null,
+            "box_hit": null,
+            "mini_hit": null,
+            "set_hit": null,
+            "position_match_count": null
+          },
+          "sum_target": {
+            "mode_name": "合計値ターゲット予想",
+            "digits": [
+              7,
+              3,
+              6,
+              9
+            ],
+            "number_str": "7369",
+            "metrics": {
+              "sum": 25,
+              "odd_even": "3:1",
+              "big_small": "3:1",
+              "shape": "バラ",
+              "target_sum": "24-26"
+            },
+            "straight_hit": null,
+            "box_hit": null,
+            "mini_hit": null,
+            "set_hit": null,
+            "position_match_count": null
+          }
+        }
+      },
+      "800": {
+        "modes": {
+          "balanced": {
+            "mode_name": "総合予想",
             "digits": [
               8,
               5,
@@ -139575,225 +141694,19 @@
             "set_hit": null,
             "position_match_count": null
           },
-          "sum_target": {
-            "mode_name": "合計値ターゲット予想",
-            "digits": [
-              0,
-              5,
-              0,
-              4
-            ],
-            "number_str": "0504",
-            "metrics": {
-              "sum": 9,
-              "odd_even": "1:3",
-              "big_small": "1:3",
-              "shape": "ダブル(重複あり)",
-              "target_sum": "9-11"
-            },
-            "straight_hit": null,
-            "box_hit": null,
-            "mini_hit": null,
-            "set_hit": null,
-            "position_match_count": null
-          }
-        }
-      },
-      "600": {
-        "modes": {
-          "balanced": {
-            "mode_name": "総合予想",
-            "digits": [
-              0,
-              5,
-              0,
-              4
-            ],
-            "number_str": "0504",
-            "metrics": {
-              "sum": 9,
-              "odd_even": "1:3",
-              "big_small": "1:3",
-              "shape": "ダブル(重複あり)",
-              "target_sum": null
-            },
-            "straight_hit": null,
-            "box_hit": null,
-            "mini_hit": null,
-            "set_hit": null,
-            "position_match_count": null
-          },
           "frequency_heavy": {
             "mode_name": "出現頻度重視",
             "digits": [
               2,
-              2,
+              3,
               9,
               4
             ],
-            "number_str": "2294",
-            "metrics": {
-              "sum": 17,
-              "odd_even": "1:3",
-              "big_small": "1:3",
-              "shape": "ダブル(重複あり)",
-              "target_sum": null
-            },
-            "straight_hit": null,
-            "box_hit": null,
-            "mini_hit": null,
-            "set_hit": null,
-            "position_match_count": null
-          },
-          "recent_heavy": {
-            "mode_name": "直近トレンド重視",
-            "digits": [
-              0,
-              5,
-              0,
-              4
-            ],
-            "number_str": "0504",
-            "metrics": {
-              "sum": 9,
-              "odd_even": "1:3",
-              "big_small": "1:3",
-              "shape": "ダブル(重複あり)",
-              "target_sum": null
-            },
-            "straight_hit": null,
-            "box_hit": null,
-            "mini_hit": null,
-            "set_hit": null,
-            "position_match_count": null
-          },
-          "pull_heavy": {
-            "mode_name": "引っ張り重視",
-            "digits": [
-              0,
-              6,
-              6,
-              4
-            ],
-            "number_str": "0664",
-            "metrics": {
-              "sum": 16,
-              "odd_even": "0:4",
-              "big_small": "2:2",
-              "shape": "ダブル(重複あり)",
-              "target_sum": null
-            },
-            "straight_hit": null,
-            "box_hit": null,
-            "mini_hit": null,
-            "set_hit": null,
-            "position_match_count": null
-          },
-          "cycle_heavy": {
-            "mode_name": "周期重視",
-            "digits": [
-              0,
-              2,
-              9,
-              0
-            ],
-            "number_str": "0290",
-            "metrics": {
-              "sum": 11,
-              "odd_even": "1:3",
-              "big_small": "1:3",
-              "shape": "ダブル(重複あり)",
-              "target_sum": null
-            },
-            "straight_hit": null,
-            "box_hit": null,
-            "mini_hit": null,
-            "set_hit": null,
-            "position_match_count": null
-          },
-          "ml_heavy": {
-            "mode_name": "AI(RF+LSTM)重視",
-            "digits": [
-              0,
-              5,
-              0,
-              4
-            ],
-            "number_str": "0504",
-            "metrics": {
-              "sum": 9,
-              "odd_even": "1:3",
-              "big_small": "1:3",
-              "shape": "ダブル(重複あり)",
-              "target_sum": null
-            },
-            "straight_hit": null,
-            "box_hit": null,
-            "mini_hit": null,
-            "set_hit": null,
-            "position_match_count": null
-          },
-          "sum_target": {
-            "mode_name": "合計値ターゲット予想",
-            "digits": [
-              0,
-              5,
-              9,
-              9
-            ],
-            "number_str": "0599",
-            "metrics": {
-              "sum": 23,
-              "odd_even": "3:1",
-              "big_small": "3:1",
-              "shape": "ダブル(重複あり)",
-              "target_sum": "21-23"
-            },
-            "straight_hit": null,
-            "box_hit": null,
-            "mini_hit": null,
-            "set_hit": null,
-            "position_match_count": null
-          }
-        }
-      },
-      "700": {
-        "modes": {
-          "balanced": {
-            "mode_name": "総合予想",
-            "digits": [
-              0,
-              5,
-              9,
-              4
-            ],
-            "number_str": "0594",
+            "number_str": "2394",
             "metrics": {
               "sum": 18,
               "odd_even": "2:2",
-              "big_small": "2:2",
-              "shape": "バラ",
-              "target_sum": null
-            },
-            "straight_hit": null,
-            "box_hit": null,
-            "mini_hit": null,
-            "set_hit": null,
-            "position_match_count": null
-          },
-          "frequency_heavy": {
-            "mode_name": "出現頻度重視",
-            "digits": [
-              2,
-              5,
-              9,
-              0
-            ],
-            "number_str": "2590",
-            "metrics": {
-              "sum": 16,
-              "odd_even": "2:2",
-              "big_small": "2:2",
+              "big_small": "1:3",
               "shape": "バラ",
               "target_sum": null
             },
@@ -139828,17 +141741,17 @@
           "pull_heavy": {
             "mode_name": "引っ張り重視",
             "digits": [
-              5,
-              6,
-              6,
-              4
+              2,
+              4,
+              1,
+              9
             ],
-            "number_str": "5664",
+            "number_str": "2419",
             "metrics": {
-              "sum": 21,
-              "odd_even": "1:3",
-              "big_small": "3:1",
-              "shape": "ダブル(重複あり)",
+              "sum": 16,
+              "odd_even": "2:2",
+              "big_small": "1:3",
+              "shape": "バラ",
               "target_sum": null
             },
             "straight_hit": null,
@@ -139850,16 +141763,16 @@
           "cycle_heavy": {
             "mode_name": "周期重視",
             "digits": [
-              3,
-              6,
+              7,
               5,
+              9,
               8
             ],
-            "number_str": "3658",
+            "number_str": "7598",
             "metrics": {
-              "sum": 22,
-              "odd_even": "2:2",
-              "big_small": "3:1",
+              "sum": 29,
+              "odd_even": "3:1",
+              "big_small": "4:0",
               "shape": "バラ",
               "target_sum": null
             },
@@ -139872,15 +141785,15 @@
           "ml_heavy": {
             "mode_name": "AI(RF+LSTM)重視",
             "digits": [
-              8,
-              6,
-              6,
-              4
+              9,
+              3,
+              9,
+              8
             ],
-            "number_str": "8664",
+            "number_str": "9398",
             "metrics": {
-              "sum": 24,
-              "odd_even": "0:4",
+              "sum": 29,
+              "odd_even": "3:1",
               "big_small": "3:1",
               "shape": "ダブル(重複あり)",
               "target_sum": null
@@ -139894,176 +141807,18 @@
           "sum_target": {
             "mode_name": "合計値ターゲット予想",
             "digits": [
-              2,
+              8,
               5,
-              9,
-              0
+              0,
+              4
             ],
-            "number_str": "2590",
+            "number_str": "8504",
             "metrics": {
-              "sum": 16,
-              "odd_even": "2:2",
+              "sum": 17,
+              "odd_even": "1:3",
               "big_small": "2:2",
               "shape": "バラ",
               "target_sum": "15-17"
-            },
-            "straight_hit": null,
-            "box_hit": null,
-            "mini_hit": null,
-            "set_hit": null,
-            "position_match_count": null
-          }
-        }
-      },
-      "800": {
-        "modes": {
-          "balanced": {
-            "mode_name": "総合予想",
-            "digits": [
-              0,
-              5,
-              0,
-              4
-            ],
-            "number_str": "0504",
-            "metrics": {
-              "sum": 9,
-              "odd_even": "1:3",
-              "big_small": "1:3",
-              "shape": "ダブル(重複あり)",
-              "target_sum": null
-            },
-            "straight_hit": null,
-            "box_hit": null,
-            "mini_hit": null,
-            "set_hit": null,
-            "position_match_count": null
-          },
-          "frequency_heavy": {
-            "mode_name": "出現頻度重視",
-            "digits": [
-              2,
-              3,
-              9,
-              4
-            ],
-            "number_str": "2394",
-            "metrics": {
-              "sum": 18,
-              "odd_even": "2:2",
-              "big_small": "1:3",
-              "shape": "バラ",
-              "target_sum": null
-            },
-            "straight_hit": null,
-            "box_hit": null,
-            "mini_hit": null,
-            "set_hit": null,
-            "position_match_count": null
-          },
-          "recent_heavy": {
-            "mode_name": "直近トレンド重視",
-            "digits": [
-              0,
-              5,
-              0,
-              4
-            ],
-            "number_str": "0504",
-            "metrics": {
-              "sum": 9,
-              "odd_even": "1:3",
-              "big_small": "1:3",
-              "shape": "ダブル(重複あり)",
-              "target_sum": null
-            },
-            "straight_hit": null,
-            "box_hit": null,
-            "mini_hit": null,
-            "set_hit": null,
-            "position_match_count": null
-          },
-          "pull_heavy": {
-            "mode_name": "引っ張り重視",
-            "digits": [
-              0,
-              6,
-              6,
-              4
-            ],
-            "number_str": "0664",
-            "metrics": {
-              "sum": 16,
-              "odd_even": "0:4",
-              "big_small": "2:2",
-              "shape": "ダブル(重複あり)",
-              "target_sum": null
-            },
-            "straight_hit": null,
-            "box_hit": null,
-            "mini_hit": null,
-            "set_hit": null,
-            "position_match_count": null
-          },
-          "cycle_heavy": {
-            "mode_name": "周期重視",
-            "digits": [
-              9,
-              6,
-              6,
-              4
-            ],
-            "number_str": "9664",
-            "metrics": {
-              "sum": 25,
-              "odd_even": "1:3",
-              "big_small": "3:1",
-              "shape": "ダブル(重複あり)",
-              "target_sum": null
-            },
-            "straight_hit": null,
-            "box_hit": null,
-            "mini_hit": null,
-            "set_hit": null,
-            "position_match_count": null
-          },
-          "ml_heavy": {
-            "mode_name": "AI(RF+LSTM)重視",
-            "digits": [
-              0,
-              6,
-              0,
-              5
-            ],
-            "number_str": "0605",
-            "metrics": {
-              "sum": 11,
-              "odd_even": "1:3",
-              "big_small": "2:2",
-              "shape": "ダブル(重複あり)",
-              "target_sum": null
-            },
-            "straight_hit": null,
-            "box_hit": null,
-            "mini_hit": null,
-            "set_hit": null,
-            "position_match_count": null
-          },
-          "sum_target": {
-            "mode_name": "合計値ターゲット予想",
-            "digits": [
-              2,
-              6,
-              0,
-              4
-            ],
-            "number_str": "2604",
-            "metrics": {
-              "sum": 12,
-              "odd_even": "0:4",
-              "big_small": "1:3",
-              "shape": "バラ",
-              "target_sum": "12-14"
             },
             "straight_hit": null,
             "box_hit": null,
@@ -140078,17 +141833,17 @@
           "balanced": {
             "mode_name": "総合予想",
             "digits": [
-              9,
+              8,
               3,
-              9,
+              6,
               4
             ],
-            "number_str": "9394",
+            "number_str": "8364",
             "metrics": {
-              "sum": 25,
-              "odd_even": "3:1",
+              "sum": 21,
+              "odd_even": "1:3",
               "big_small": "2:2",
-              "shape": "ダブル(重複あり)",
+              "shape": "バラ",
               "target_sum": null
             },
             "straight_hit": null,
@@ -140144,17 +141899,17 @@
           "pull_heavy": {
             "mode_name": "引っ張り重視",
             "digits": [
-              5,
+              2,
+              4,
               6,
-              6,
-              4
+              9
             ],
-            "number_str": "5664",
+            "number_str": "2469",
             "metrics": {
               "sum": 21,
               "odd_even": "1:3",
-              "big_small": "3:1",
-              "shape": "ダブル(重複あり)",
+              "big_small": "2:2",
+              "shape": "バラ",
               "target_sum": null
             },
             "straight_hit": null,
@@ -140166,17 +141921,17 @@
           "cycle_heavy": {
             "mode_name": "周期重視",
             "digits": [
+              7,
+              5,
               9,
-              6,
-              6,
               8
             ],
-            "number_str": "9668",
+            "number_str": "7598",
             "metrics": {
               "sum": 29,
-              "odd_even": "1:3",
+              "odd_even": "3:1",
               "big_small": "4:0",
-              "shape": "ダブル(重複あり)",
+              "shape": "バラ",
               "target_sum": null
             },
             "straight_hit": null,
@@ -140188,16 +141943,16 @@
           "ml_heavy": {
             "mode_name": "AI(RF+LSTM)重視",
             "digits": [
-              9,
+              8,
               3,
               6,
-              3
+              8
             ],
-            "number_str": "9363",
+            "number_str": "8368",
             "metrics": {
-              "sum": 21,
-              "odd_even": "3:1",
-              "big_small": "2:2",
+              "sum": 25,
+              "odd_even": "1:3",
+              "big_small": "3:1",
               "shape": "ダブル(重複あり)",
               "target_sum": null
             },
@@ -140210,18 +141965,18 @@
           "sum_target": {
             "mode_name": "合計値ターゲット予想",
             "digits": [
-              0,
+              2,
               3,
               6,
               4
             ],
-            "number_str": "0364",
+            "number_str": "2364",
             "metrics": {
-              "sum": 13,
+              "sum": 15,
               "odd_even": "1:3",
               "big_small": "1:3",
               "shape": "バラ",
-              "target_sum": "12-14"
+              "target_sum": "15-17"
             },
             "straight_hit": null,
             "box_hit": null,
@@ -140237,11 +141992,11 @@
             "mode_name": "総合予想",
             "digits": [
               2,
-              7,
+              3,
               9,
-              4
+              8
             ],
-            "number_str": "2794",
+            "number_str": "2398",
             "metrics": {
               "sum": 22,
               "odd_even": "2:2",
@@ -140302,17 +142057,17 @@
           "pull_heavy": {
             "mode_name": "引っ張り重視",
             "digits": [
-              5,
+              2,
+              4,
               6,
-              6,
-              4
+              9
             ],
-            "number_str": "5664",
+            "number_str": "2469",
             "metrics": {
               "sum": 21,
               "odd_even": "1:3",
-              "big_small": "3:1",
-              "shape": "ダブル(重複あり)",
+              "big_small": "2:2",
+              "shape": "バラ",
               "target_sum": null
             },
             "straight_hit": null,
@@ -140324,17 +142079,17 @@
           "cycle_heavy": {
             "mode_name": "周期重視",
             "digits": [
-              2,
-              6,
-              6,
-              7
+              7,
+              5,
+              9,
+              8
             ],
-            "number_str": "2667",
+            "number_str": "7598",
             "metrics": {
-              "sum": 21,
-              "odd_even": "1:3",
-              "big_small": "3:1",
-              "shape": "ダブル(重複あり)",
+              "sum": 29,
+              "odd_even": "3:1",
+              "big_small": "4:0",
+              "shape": "バラ",
               "target_sum": null
             },
             "straight_hit": null,
@@ -140346,15 +142101,15 @@
           "ml_heavy": {
             "mode_name": "AI(RF+LSTM)重視",
             "digits": [
-              7,
-              7,
-              9,
-              4
+              8,
+              3,
+              6,
+              8
             ],
-            "number_str": "7794",
+            "number_str": "8368",
             "metrics": {
-              "sum": 27,
-              "odd_even": "3:1",
+              "sum": 25,
+              "odd_even": "1:3",
               "big_small": "3:1",
               "shape": "ダブル(重複あり)",
               "target_sum": null
@@ -140368,18 +142123,18 @@
           "sum_target": {
             "mode_name": "合計値ターゲット予想",
             "digits": [
-              2,
-              7,
-              0,
-              4
+              5,
+              3,
+              9,
+              8
             ],
-            "number_str": "2704",
+            "number_str": "5398",
             "metrics": {
-              "sum": 13,
-              "odd_even": "1:3",
-              "big_small": "1:3",
+              "sum": 25,
+              "odd_even": "3:1",
+              "big_small": "3:1",
               "shape": "バラ",
-              "target_sum": "12-14"
+              "target_sum": "24-26"
             },
             "straight_hit": null,
             "box_hit": null,
