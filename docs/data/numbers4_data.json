@@ -1,8 +1,8 @@
 {
-  "last_updated": "2026-11-07T03:53:33.710634",
+  "last_updated": "2026-11-10T05:24:58.456873",
   "game": "numbers4",
   "digits": 4,
-  "total_draws": 7109,
+  "total_draws": 7110,
   "draws": [
     {
       "round": 1,
@@ -71092,6 +71092,16 @@
         4,
         1,
         9
+      ]
+    },
+    {
+      "round": 7110,
+      "date": "2026-11-09",
+      "digits": [
+        1,
+        8,
+        4,
+        3
       ]
     }
   ]
